@@ -1,0 +1,1 @@
+java -cp "C:\Users\IBM_ADMIN\Documents\ws\jo\chuck.terran.admin\bin" chuck.terran.admin.tools.BuildAndPackage

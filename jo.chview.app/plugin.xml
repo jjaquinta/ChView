@@ -1,0 +1,1440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="jo.chview.app.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="jo.chview.app.application"
+            name="ChView">
+         <property
+               name="windowImages"
+               value="icons/alt_window_16.gif,icons/alt_window_32.gif,icons/alt_window_48.gif,icons/alt_window_64.gif,icons/alt_window_128.gif">
+         </property>
+         <property
+               name="appName"
+               value="ChView">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="5,275,445,15">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+         <property
+               name="aboutImage"
+               value="images/about.png">
+         </property>
+         <property
+               name="aboutText"
+               value="Copyright 1997, 2015 by Jo Grant and Ben Lin.  All Rights Reserved.  ChView (including all program, data, and documentation files) is the sole property of Jo Grant and Ben Lin and must not be copied or reproduced in any form without permission from one of the copyright owners, except for personal use. Version 1.0.0.20150612">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="System"
+            class="jo.d2k.admin.rcp.sys.ui.SystemPerspective"
+            id="jo.d2k.admin.rcp.sys.ui.SystemPerspective">
+      </perspective>
+      <perspective
+            name="Tech Preview"
+            class="jo.d2k.admin.rcp.sys.ui.TechPreviewPerspective"
+            id="jo.d2k.admin.rcp.sys.ui.TechPreviewPerspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Info"
+            class="jo.d2k.admin.rcp.sys.ui.InfoView"
+            id="jo.d2k.admin.rcp.sys.ui.InfoView">
+      </view>
+      <view
+            name="Stars"
+            class="jo.d2k.admin.rcp.sys.ui.StarsView"
+            id="jo.d2k.admin.rcp.sys.ui.StarsView">
+      </view>
+      <view
+            name="Table"
+            class="jo.d2k.admin.rcp.sys.ui.StarsTableView"
+            id="jo.d2k.admin.rcp.sys.ui.StarsTableView">
+      </view>
+      <view
+            name="System"
+            class="jo.d2k.admin.rcp.sys.ui.SystemView"
+            id="jo.d2k.admin.rcp.sys.ui.SystemView">
+      </view>
+      <view
+            name="Two Dimensional"
+            class="jo.d2k.admin.rcp.sys.viz.twod.ui.TwoDView"
+            id="jo.d2k.admin.rcp.sys.viz.twod.ui.TwoDView">
+      </view>
+      <view
+            name="Search"
+            class="jo.d2k.admin.rcp.sys.ui.SearchView"
+            id="jo.d2k.admin.rcp.sys.ui.SearchView">
+      </view>
+      <view
+            name="Routes"
+            class="jo.d2k.admin.rcp.sys.ui.RoutesView"
+            id="jo.d2k.admin.rcp.sys.ui.RoutesView">
+      </view>
+      <view
+            name="Deletions"
+            class="jo.d2k.admin.rcp.sys.ui.DeletionsView"
+            id="jo.d2k.admin.rcp.sys.ui.DeletionsView">
+      </view>
+      <view
+            name="Sky"
+            class="jo.d2k.admin.rcp.viz.sky.SkyView"
+            id="jo.d2k.admin.rcp.viz.sky.SkyView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="jo.d2k.admin.rcp.sys.ui.SystemPerspective">
+         <viewShortcut id="jo.d2k.admin.rcp.sys.ui.StarsView"/>
+         <view
+         	visible="true"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="org.eclipse.ui.editorss"
+            relationship="left"
+            id="jo.d2k.admin.rcp.sys.ui.StarsView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.StarsView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.viz.twod.ui.TwoDView">
+         </view>
+         <view
+         	visible="true"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.StarsView"
+            relationship="right"
+            ratio=".666"
+            id="jo.d2k.admin.rcp.sys.ui.InfoView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.SearchView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.RoutesView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.StarsTableView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.DeletionsView">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="jo.d2k.admin.rcp.sys.ui.TechPreviewPerspective">
+         <viewShortcut id="jo.d2k.admin.rcp.sys.ui.StarsView"/>
+         <view
+         	visible="true"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="org.eclipse.ui.editorss"
+            relationship="left"
+            id="jo.d2k.admin.rcp.sys.ui.StarsView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.StarsView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.viz.twod.ui.TwoDView">
+         </view>
+         <view
+         	visible="true"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.StarsView"
+            relationship="right"
+            ratio=".666"
+            id="jo.d2k.admin.rcp.sys.ui.InfoView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.SearchView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.RoutesView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.StarsTableView">
+         </view>
+         <view
+         	visible="false"
+            closeable="true"
+            moveable="true"
+            standalone="false"
+            minimized="false"
+            relative="jo.d2k.admin.rcp.sys.ui.InfoView"
+            relationship="stack"
+            id="jo.d2k.admin.rcp.sys.ui.DeletionsView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="File"
+               id="org.eclipse.ui.main.menu.file"
+               >
+         </menu>
+         <menu
+               label="Edit"
+               id="org.eclipse.ui.main.menu.edit"
+               >
+         </menu>
+         <menu
+               label="View"
+               id="org.eclipse.ui.main.menu.view"
+               >
+         </menu>
+         <menu
+               label="Report"
+               id="org.eclipse.ui.main.menu.report"
+               >
+         </menu>
+         <menu
+               label="Help"
+               id="org.eclipse.ui.main.menu.help">
+            <command
+                  commandId="chuck.terran.admin.cmd.reportbug"
+                  label="Report Bug...">
+            </command>
+            <command
+                  commandId="chuck.terran.admin.cmd.update"
+                  label="Check for updates...">
+            </command>
+            <separator
+                  name="jo.chview.app.separator8"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.help.aboutAction"
+                  label="About...">
+            </command>
+         </menu>
+      </menuContribution>
+      <!-- ChView Perspective Menus -->
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu.file">
+            <command
+                  commandId="org.eclipse.ui.window.preferences"
+                  label="Preferences...">
+            </command>
+            <menu
+               label="Data Source"
+               id="org.eclipse.ui.main.menu.ds"
+               >
+	            <command
+	                  commandId="chuck.terran.admin.cmd.newdata"
+	                  label="New...">
+	            </command>
+	            <command
+	                  commandId="chuck.terran.admin.cmd.switchdata"
+	                  label="Switch...">
+	            </command>
+	            <command
+	                  commandId="chuck.terran.admin.cmd.deletedata"
+	                  label="Delete...">
+	            </command>
+	            <command
+	                  commandId="chuck.terran.admin.cmd.lockdata"
+	                  label="Lock...">
+	            </command>
+	            <command
+	                  commandId="chuck.terran.admin.cmd.unlockdata"
+	                  label="Unlock...">
+	            </command>
+            </menu>
+            <command
+                  commandId="chuck.terran.admin.twod.cmd.saveImage"
+                  label="Save Image..."
+                  >
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isTwoDView">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <separator
+                  name="jo.chview.app.separator7"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="chuck.terran.admin.cmd.resetperspective"
+                  label="Reset Application">
+            </command>
+            <!--
+            <command
+                  commandId="org.eclipse.ui.window.closePerspective"
+                  label="Close Perspective">
+            </command>
+            -->            
+            <command
+                  commandId="org.eclipse.ui.perspectives.showPerspective"
+                  label="Show Perspective">
+            </command>
+            <separator
+                  name="jo.chview.app.separator6"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="chuck.terran.admin.cmd.import"
+                  label="Import...">
+            </command>
+            <command
+                  commandId="chuck.terran.admin.cmd.export"
+                  label="Export...">
+            </command>
+            <separator
+                  name="jo.chview.app.separator5"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit">
+            </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu.edit">
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.select.all"
+                  label="Select All"
+                  >
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewStarsView">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.select.none"
+                  label="Select None"
+                  >
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewStarsView">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.twod.cmd.selectnone"
+                  label="Select None">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isTwoDView">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="jo.chview.app.separator4"
+                  visible="true">
+            </separator>
+         <command
+               commandId="chuck.terran.admin.chview.cmd.newstar"
+               label="New Star...">
+            <visibleWhen>
+               <reference
+                     definitionId="chuck.terran.admin.isChViewPerspective">
+               </reference>
+            </visibleWhen>
+         </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.edit.star"
+                  label="Edit Star..."
+                  >
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.route.finder"
+                  label="Path Finder..."
+                  >
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.route"
+                  label="Make Route..."
+                  >
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <separator
+                  name="jo.chview.app.separator3"
+                  visible="true">
+            </separator>
+	         <menu
+	               label="Optimize"
+	               id="org.eclipse.ui.main.menu.edit.optimize">
+	            <command
+	                  commandId="chuck.terran.admin.chview.cmd.optimize.flat"
+	                  label="Flatness"
+	                  >
+	                 <visibleWhen>
+	                  	<reference
+	                        definitionId="chuck.terran.admin.isChViewStarsView">
+	                  	</reference>
+	               	 </visibleWhen>
+	            </command>
+	            <command
+	                  commandId="chuck.terran.admin.chview.cmd.optimize.spacing"
+	                  label="Spacing"
+	                  >
+	                 <visibleWhen>
+	                  	<reference
+	                        definitionId="chuck.terran.admin.isChViewStarsView">
+	                  	</reference>
+	               	 </visibleWhen>
+	            </command>
+	            <command
+	                  commandId="chuck.terran.admin.chview.cmd.optimize.crossings"
+	                  label="Crossings"
+	                  >
+	                 <visibleWhen>
+	                  	<reference
+	                        definitionId="chuck.terran.admin.isChViewStarsView">
+	                  	</reference>
+	               	 </visibleWhen>
+	            </command>
+            </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu.view">
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.showall"
+                  label="Show All">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewStarsView">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.showonly"
+                  label="Show Only Selected">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewStarsView">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.hide"
+                  label="Hide Selected">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewStarsView">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <separator
+                  name="jo.chview.app.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.filter"
+                  label="Filter...">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewStarsView">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.search"
+                  label="Search...">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.view.star"
+                  label="View Star..."
+                  >
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.goto"
+                  label="Goto...">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <separator
+                  name="jo.chview.app.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.twoDSnapshot"
+                  label="2D Snapshot">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isTechPreviewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+         <menu
+               label="Show"
+               id="org.eclipse.ui.main.menu.view.show">
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.showstars"
+                  label="Show Stars"
+                  style="toggle">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.showinfo"
+                  label="Show Info"
+                  style="toggle">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.showstars.table"
+                  label="Show Table"
+                  style="toggle">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.showsky"
+                  label="Show Sky"
+                  style="toggle">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isTechPreviewPerspective">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.showsystem"
+                  label="Show System"
+                  style="toggle">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isTechPreviewPerspective">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.routes"
+                  label="Show Routes"
+                  style="toggle">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  </reference>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.deletions"
+                  label="Show Deletions"
+                  style="toggle">
+               <visibleWhen>
+                  <reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu.report">
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.distance">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.distance.matrix">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.density">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.links">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.routes">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.cubicdensity">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.clusters">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.binary">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.crossroads">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.massgrad">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.distclust">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.absmag">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.appmag">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+            <command
+                  commandId="chuck.terran.admin.chview.cmd.report.merge">
+                 <visibleWhen>
+                  	<reference
+                        definitionId="chuck.terran.admin.isChViewPerspective">
+                  	</reference>
+               	 </visibleWhen>
+            </command>
+      </menuContribution>
+   </extension>
+   <!-- switches -->
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="chuck.terran.admin.isChViewPerspective">
+          <with
+                variable="activeWorkbenchWindow.activePerspective">
+             <or>
+	             <equals
+	                   value="jo.d2k.admin.rcp.sys.ui.SystemPerspective">
+	             </equals>
+	             <equals
+	                   value="jo.d2k.admin.rcp.sys.ui.TechPreviewPerspective">
+	             </equals>
+             </or>
+          </with>
+      </definition>
+      <definition
+            id="chuck.terran.admin.isTechPreviewPerspective">
+          <with
+                variable="activeWorkbenchWindow.activePerspective">
+             <equals
+                   value="jo.d2k.admin.rcp.sys.ui.TechPreviewPerspective">
+             </equals>
+          </with>
+      </definition>
+      <definition
+            id="chuck.terran.admin.isChViewStarsView">
+          <with
+                variable="activePartId">
+             <equals
+                   value="jo.d2k.admin.rcp.sys.ui.StarsView">
+             </equals>
+          </with>
+      </definition>
+      <definition
+            id="chuck.terran.admin.isTwoDView">
+          <with
+                variable="activePartId">
+             <equals
+                   value="jo.d2k.admin.rcp.sys.viz.twod.ui.TwoDView">
+             </equals>
+          </with>
+      </definition>
+  </extension>
+  <!-- commands -->
+  <extension
+	point="org.eclipse.ui.commands">
+      <category
+            name="ChView View Commands"
+            description="ChView View Commands"
+            id="chuck.terran.admin.chview.cmd.cat.view">
+      </category>
+      <category
+            name="Data Source Commands"
+            description="ChView Data Source Commands"
+            id="chuck.terran.ds">
+      </category>
+      <command
+          categoryId="chuck.terran.admin.chview.cmd.cat.view"
+          id="chuck.terran.admin.chview.cmd.route"
+          name="Make Route"
+          description="Make a route between two points"
+          />
+      <command
+          categoryId="chuck.terran.admin.chview.cmd.cat.view"
+          id="chuck.terran.admin.chview.cmd.route.finder"
+          name="Path Finder"
+          description="Find the path between two points"
+          />
+      <command
+          categoryId="chuck.terran.admin.chview.cmd.cat.view"
+          id="chuck.terran.admin.chview.cmd.edit.star"
+          name="Edit Star..."
+          description="Edit the details of a star"
+          />
+      <command
+          categoryId="chuck.terran.admin.chview.cmd.cat.view"
+          id="chuck.terran.admin.chview.cmd.view.star"
+          name="View Star..."
+          description="View star details"
+          />
+      <command
+            categoryId="chuck.terran.ds"
+            id="chuck.terran.admin.cmd.switchdata"
+            description="Switch what data repository is being used"
+            name="Switch Data Source...">
+      </command>
+      <command
+            categoryId="chuck.terran.ds"
+            id="chuck.terran.admin.cmd.newdata"
+            description="Create a new local data source"
+            name="New Data Source...">
+      </command>
+      <command
+            categoryId="chuck.terran.ds"
+            id="chuck.terran.admin.cmd.deletedata"
+            description="Delete current data source"
+            name="Delete Data Source...">
+      </command>
+      <command
+            categoryId="chuck.terran.ds"
+            id="chuck.terran.admin.cmd.lockdata"
+            description="Lock current data source"
+            name="Lock Data Source...">
+      </command>
+      <command
+            categoryId="chuck.terran.ds"
+            id="chuck.terran.admin.cmd.unlockdata"
+            description="Unlock current data source"
+            name="Unlock Data Source...">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.cmd.export"
+            description="Export dataset"
+            name="Export...">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.cmd.import"
+            description="Import dataset"
+            name="Import...">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.cmd.resetperspective"
+            description="Reset the application display"
+            name="Reset Application...">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.cmd.reportbug"
+            description="Report a bug to support"
+            name="Report Bug...">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.cmd.update"
+            description="Check for updates to the program"
+            name="Check for updates...">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.showstars"
+            description="Show Stars View"
+            name="Show Stars View">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.showstars.table"
+            description="Show Stars Table"
+            name="Show Stars Table">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.showsystem"
+            description="Show System View"
+            name="Show System View">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.showsky"
+            description="Show Sky"
+            name="Show Sky">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.showinfo"
+            description="Show Info View"
+            name="Show Info View">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.goto"
+            description="Goto coordintes"
+            name="Goto...">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.showall"
+            description="Show all objects"
+            name="Show all">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.showonly"
+            description="Show only selected object"
+            name="Show Only Selected">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.hide"
+            description="Hide selected objects"
+            name="Hide selected">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.filter"
+            description="Choose what stars to filter out"
+            name="Filter">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.select.all"
+            description="Select all stars"
+            name="Select All">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.select.none"
+            description="Deselect all stars"
+            name="Select None">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.search"
+            description="Search for a star"
+            name="Search">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.newstar"
+            description="Create a new star"
+            name="New Star">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.routes"
+            description="Edit routes"
+            name="Routes">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.deletions"
+            description="Edit deletions"
+            name="Deletions">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.twoDSnapshot"
+            description="Snapshot the current view and render it in 2D"
+            name="2D Snapshot">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.twod.cmd.saveImage"
+            description="Save 2D image to disk"
+            name="Save Image">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.twod.cmd.selectnone"
+            description="Deselect all objects"
+            name="Clear Selection">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.distance"
+            description="Report on distance from the focused star"
+            name="Distance">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.distance.matrix"
+            description="Report on distance between stars"
+            name="Distance Matrix">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.density"
+            description="Report on the density of stars in a sphere"
+            name="Density">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.links"
+            description="Report on link distances"
+            name="Links">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.routes"
+            description="Report on route distances"
+            name="Routes">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.cubicdensity"
+            description="Report on the density of stars in a cube"
+            name="Cubic Density">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.clusters"
+            description="Report on clusters of stars"
+            name="Clusters">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.binary"
+            description="Report on binary systems"
+            name="Binary">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.crossroads"
+            description="Report on most frequently crossed stars"
+            name="Crossroads">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.massgrad"
+            description="Report on the mass gradient between stars"
+            name="Mass Clustering">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.distclust"
+            description="Report on distance clustered stars"
+            name="Distance Clustering">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.absmag"
+            description="Report on absolute magnitude distribution"
+            name="Absolute Magnitude">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.appmag"
+            description="Report on apparent magnitude distribution"
+            name="Apparent Magnitude">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.report.merge"
+            description="Report on conflicts upon merge"
+            name="Merge Conflicts">
+      </command>
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.optimize.flat"
+            description="Optimize for flatness of display"
+            name="Flatness">
+      </command>      
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.optimize.spacing"
+            description="Optimize for spacing of stars"
+            name="Spacing">
+      </command>      
+      <command
+            categoryId="chuck.terran.admin.chview.cmd.cat.view"
+            id="chuck.terran.admin.chview.cmd.optimize.crossings"
+            description="Optimize for crossings of links"
+            name="Crossings">
+      </command>      
+  </extension>
+  <!-- Handlers -->
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerShowStars"
+            commandId="chuck.terran.admin.chview.cmd.showstars">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerShowStarsTable"
+            commandId="chuck.terran.admin.chview.cmd.showstars.table">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerShowSystem"
+            commandId="chuck.terran.admin.chview.cmd.showsystem">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerShowSky"
+            commandId="chuck.terran.admin.chview.cmd.showsky">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerShowInfo"
+            commandId="chuck.terran.admin.chview.cmd.showinfo">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerGoto"
+            commandId="chuck.terran.admin.chview.cmd.goto">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerShowAll"
+            commandId="chuck.terran.admin.chview.cmd.showall">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerShowOnly"
+            commandId="chuck.terran.admin.chview.cmd.showonly">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerHide"
+            commandId="chuck.terran.admin.chview.cmd.hide">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerExport"
+            commandId="chuck.terran.admin.cmd.export">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerImport"
+            commandId="chuck.terran.admin.cmd.import">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerSwitchData"
+            commandId="chuck.terran.admin.cmd.switchdata">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerNewData"
+            commandId="chuck.terran.admin.cmd.newdata">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerDeleteData"
+            commandId="chuck.terran.admin.cmd.deletedata">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerLock"
+            commandId="chuck.terran.admin.cmd.lockdata">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerUnlock"
+            commandId="chuck.terran.admin.cmd.unlockdata">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerResetPerspective"
+            commandId="chuck.terran.admin.cmd.resetperspective">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerReportBug"
+            commandId="chuck.terran.admin.cmd.reportbug">
+      </handler>  
+      <handler
+            class="chuck.terran.admin.handlers.HandlerUpdate"
+            commandId="chuck.terran.admin.cmd.update">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerFilter"
+            commandId="chuck.terran.admin.chview.cmd.filter">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerSearch"
+            commandId="chuck.terran.admin.chview.cmd.search">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerNewStar"
+            commandId="chuck.terran.admin.chview.cmd.newstar">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerRoutes"
+            commandId="chuck.terran.admin.chview.cmd.routes">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerDeletions"
+            commandId="chuck.terran.admin.chview.cmd.deletions">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerMakeRoute"
+            commandId="chuck.terran.admin.chview.cmd.route">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerFindPath"
+            commandId="chuck.terran.admin.chview.cmd.route.finder">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerEditStar"
+            commandId="chuck.terran.admin.chview.cmd.edit.star">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerViewStar"
+            commandId="chuck.terran.admin.chview.cmd.view.star">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerTwoDSnapshot"
+            commandId="chuck.terran.admin.chview.cmd.twoDSnapshot">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.sys.viz.twod.handlers.HandlerSaveImage"
+            commandId="chuck.terran.admin.twod.cmd.saveImage">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.sys.viz.twod.handlers.HandlerSelectNone"
+            commandId="chuck.terran.admin.twod.cmd.selectnone">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportDistance"
+            commandId="chuck.terran.admin.chview.cmd.report.distance">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportDistanceMatrix"
+            commandId="chuck.terran.admin.chview.cmd.report.distance.matrix">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportDensity"
+            commandId="chuck.terran.admin.chview.cmd.report.density">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportLinks"
+            commandId="chuck.terran.admin.chview.cmd.report.links">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportRoutes"
+            commandId="chuck.terran.admin.chview.cmd.report.routes">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportCubicDensity"
+            commandId="chuck.terran.admin.chview.cmd.report.cubicdensity">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportCluster"
+            commandId="chuck.terran.admin.chview.cmd.report.clusters">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportBinary"
+            commandId="chuck.terran.admin.chview.cmd.report.binary">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportCrossroads"
+            commandId="chuck.terran.admin.chview.cmd.report.crossroads">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportMassWarp"
+            commandId="chuck.terran.admin.chview.cmd.report.massgrad">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportDistanceClustering"
+            commandId="chuck.terran.admin.chview.cmd.report.distclust">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportAbsMag"
+            commandId="chuck.terran.admin.chview.cmd.report.absmag">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportAppMag"
+            commandId="chuck.terran.admin.chview.cmd.report.appmag">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.rep.HandlerReportMerge"
+            commandId="chuck.terran.admin.chview.cmd.report.merge">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerSelectAll"
+            commandId="chuck.terran.admin.chview.cmd.select.all">
+      </handler>  
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerSelectNone"
+            commandId="chuck.terran.admin.chview.cmd.select.none">
+      </handler>
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerOptimizeFlattest"
+            commandId="chuck.terran.admin.chview.cmd.optimize.flat">
+      </handler>      
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerOptimizeSpacing"
+            commandId="chuck.terran.admin.chview.cmd.optimize.spacing">
+      </handler>      
+      <handler
+            class="jo.d2k.admin.rcp.viz.chview.handlers.HandlerOptimizeCrossings"
+            commandId="chuck.terran.admin.chview.cmd.optimize.crossings">
+      </handler>      
+   </extension>
+   <extension
+      point = "org.eclipse.ui.preferencePages">
+       <page id="jo.d2k.admin.rcp.viz.general"
+	    class="jo.d2k.admin.rcp.viz.chview.prefs.SelectPreferencePage"
+            name="General">
+       </page>
+       <page id="jo.d2k.admin.rcp.viz.chview"
+	    class="jo.d2k.admin.rcp.viz.chview.prefs.ChViewPreferencePage"
+            name="ChView">
+       </page>
+       <page id="jo.d2k.admin.rcp.viz.chview"
+	    class="jo.d2k.admin.rcp.viz.chview.prefs.LinksPreferencePage"
+            name="Links">
+       </page>
+       <page id="jo.d2k.admin.rcp.db"
+	    class="chuck.terran.admin.ui.prefs.DatabasePrefs"
+            name="Data Store">
+       </page>
+       <page id="jo.d2k.admin.rcp.db.info"
+        category="jo.d2k.admin.rcp.db"
+	    class="chuck.terran.admin.ui.prefs.DatabaseInfoPrefs"
+            name="Database Info">
+       </page>
+       <page id="jo.d2k.admin.rcp.db.sg"
+        category="jo.d2k.admin.rcp.db"
+	    class="chuck.terran.admin.ui.prefs.StarGenPrefs"
+            name="Star Generation">
+       </page>
+       <page id="jo.d2k.admin.rcp.db.am"
+        category="jo.d2k.admin.rcp.db"
+	    class="chuck.terran.admin.ui.prefs.AbsMagPrefs"
+            name="Absolute Magnitude">
+       </page>
+       <page id="jo.d2k.admin.rcp.db.names"
+        category="jo.d2k.admin.rcp.db"
+	    class="chuck.terran.admin.ui.prefs.StarNamePrefs"
+            name="Star Names">
+       </page>
+       <page id="jo.d2k.admin.rcp.viz.stars"
+	    class="jo.d2k.admin.rcp.viz.chview.prefs.StarPreferencePage"
+            name="Stars">
+       </page>
+       <page id="jo.d2k.admin.rcp.db.star.schema"
+        category="jo.d2k.admin.rcp.viz.stars"
+	    class="chuck.terran.admin.ui.prefs.StarSchemaPrefs"
+            name="Extra Fields">
+       </page>
+       <page id="jo.d2k.admin.rcp.viz.routes"
+	    class="jo.d2k.admin.rcp.viz.chview.prefs.RoutePreferencePage"
+            name="Routes">
+       </page>
+   </extension>
+   <!--
+   <extension
+     point="org.eclipse.ui.menus">
+      <menuContribution
+        allPopups="false"
+        locationURI="toolbar:org.eclipse.ui.trim.status">
+     <toolbar
+           id="chuck.terran.admin.ui"
+           label="Terran Icons">
+        <control
+              class="chuck.terran.admin.ui.DataSourceStatusContribution"
+              id="chuck.terran.admin.ui.DataSourceStatusContribution">
+        </control>
+        <control
+              class="chuck.terran.admin.ui.NetworkStatusContribution"
+              id="chuck.terran.admin.ui.NetworkStatusContribution">
+        </control>
+        <control
+              class="chuck.terran.admin.ui.ViewContextStatusContribution"
+              id="chuck.terran.admin.ui.ViewContextStatusContribution">
+        </control>
+     </toolbar>
+      </menuContribution>
+   </extension>
+   -->
+   <extension
+         point="jo.chview.rcp.datasource">
+      <dataSource
+            default="true"
+            id="chview"
+            name="Cherryhverse"
+            readOnly="true"
+            type="MYSQL"
+            uri="jdbc:mysql://www.ocean-of-storms.com/ocean50_chview?user=ocean50_chview&amp;password=htP1mDUGHXnl">
+      </dataSource>
+      <dataSource
+            id="d2k"
+            name="Dawnfire 2000"
+            readOnly="true"
+            type="MYSQL"
+            uri="jdbc:mysql://www.ocean-of-storms.com/ocean50_d2k?user=ocean50_d2kchuck&amp;password=1oBBTGd6Z5uq">
+      </dataSource>
+      <!--
+      <dataSource
+            id="cache"
+            name="Mem Cache"
+            readOnly="false"
+            type="MEM"
+            uri="">
+      </dataSource> -->
+   </extension>
+
+</plugin>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="colors" name="Cached Colors" schema="schema/colors.exsd"/>
+   <extension-point id="fonts" name="Cached Fonts" schema="schema/fonts.exsd"/>
+   <extension-point id="imageplugin" name="Plugin containing images" schema="schema/imageplugin.exsd"/>
+   <extension-point id="imagemap" name="Image name map" schema="schema/imagemap.exsd"/>
+   <extension-point id="colormap" name="Color name map" schema="schema/colormap.exsd"/>
+   <extension point="jo.chview.util.colors">
+      <color name="black" rgb="000000"/>  
+      <color name="silver" rgb="C0C0C0"/>   
+      <color name="gray" rgb="808080"/>   
+      <color name="grey" rgb="808080"/>   
+      <color name="white" rgb="FFFFFF"/>  
+      <color name="maroon" rgb="800000"/>   
+      <color name="red" rgb="FF0000"/>  
+      <color name="purple" rgb="800080"/>   
+      <color name="fuchsia" rgb="FF00FF"/>  
+      <color name="green" rgb="008000"/>   
+      <color name="lime" rgb="00FF00"/>  
+      <color name="olive" rgb="808000"/>   
+      <color name="yellow" rgb="FFFF00"/>  
+      <color name="navy" rgb="000080"/>   
+      <color name="blue" rgb="0000FF"/>  
+      <color name="teal" rgb="008080"/>   
+      <color name="aqua" rgb="00FFFF"/>    
+      <color name="magenta" rgb="FF00FF"/>   
+      <color name="aliceblue" rgb="F0F8FF"/>   
+      <color name="antiquewhite" rgb="FAEBD7"/>   
+      <color name="aquamarine" rgb="7FFFD4"/>   
+      <color name="beige" rgb="F5F5DC"/>   
+      <color name="bisque" rgb="FFE4C4"/>   
+      <color name="blanchedalmond" rgb="FFEBCD"/>   
+      <color name="blueviolet" rgb="8A2BE2"/>   
+      <color name="brown" rgb="A52A2A"/>   
+      <color name="burlywood" rgb="DEB887"/>   
+      <color name="cadetblue" rgb="5F9EA0"/>   
+      <color name="chartreuse" rgb="7FFF00"/>   
+      <color name="chocolate" rgb="D2691E"/>   
+      <color name="coral" rgb="FF7F50"/>   
+      <color name="cornflowerblue" rgb="6495ED"/>   
+      <color name="cornsilk" rgb="FFF8DC"/>   
+      <color name="crimson" rgb="DC143C"/>   
+      <color name="darkblue" rgb="00008B"/>   
+      <color name="darkcyan" rgb="008B8B"/>   
+      <color name="cyan" rgb="00FFFF"/>   
+      <color name="darkgoldenrod" rgb="B8860B"/>   
+      <color name="lightgray" rgb="A9A9A9"/>   
+      <color name="lightgrey" rgb="A9A9A9"/>   
+      <color name="darkgray" rgb="404040"/>   
+      <color name="darkgrey" rgb="404040"/>   
+      <color name="darkgreen" rgb="006400"/>   
+      <color name="darkkhaki" rgb="BDB76B"/>   
+      <color name="darkmagenta" rgb="8B008B"/>   
+      <color name="darkolivegreen" rgb="556B2F"/>   
+      <color name="darkorange" rgb="FF8C00"/>   
+      <color name="darkorchid" rgb="9932CC"/>   
+      <color name="darkred" rgb="8B0000"/>   
+      <color name="darksalmon" rgb="E9967A"/>   
+      <color name="darkseagreen" rgb="8FBC8B"/>   
+      <color name="dodgerblue" rgb="1E90FF"/>   
+      <color name="forestgreen" rgb="228B22"/>   
+      <color name="indianred" rgb="CD5C5C"/>   
+      <color name="lavender" rgb="E6E6FA"/>   
+      <color name="lemonchiffon" rgb="FFFACD"/>   
+      <color name="lightgrey" rgb="D3D3D3"/>   
+      <color name="lightseagreen" rgb="20B2AA"/>   
+      <color name="mediumslateblue" rgb="7B68EE"/>   
+      <color name="navy" rgb="000080"/>   
+      <color name="orange" rgb="FFA500"/>   
+      <color name="salmon" rgb="FA8072"/>   
+      <color name="slateblue" rgb="6A5ACD"/>   
+      <color name="yellowgreen" rgb="9ACD32"/>   
+      <color name="gold" rgb="FFD700"/>   
+      <color name="palegoldenrod" rgb="EEE8AA"/>   
+   </extension>
+   <extension point="jo.chview.util.fonts">
+      <font name="H1" fontname="Arial" size="18" style="b" />   
+      <font name="H2" fontname="Arial" size="16" style="b" />   
+      <font name="H3" fontname="Arial" size="14" style="b" />   
+      <font name="H4" fontname="Arial" size="12" style="b" />   
+      <font name="H5" fontname="Arial" size="10" style="b" />   
+      <font name="Dialog" fontname="Arial" size="10" style="n" />   
+      <font name="DialogSmall" fontname="Arial" size="8" style="n" />   
+      <font name="DialogBold" fontname="Arial" size="10" style="b" />   
+   </extension>
+
+</plugin>

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Admin
+Bundle-SymbolicName: chuck.terran.admin;singleton:=true
+Bundle-Version: 1.0.0.20150612
+Bundle-Activator: chuck.terran.admin.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ jo.chview.util,
+ jo.chview.rcp,
+ org.eclipse.core.resources;bundle-version="3.9.1",
+ jo.chview.core,
+ jo.chview.util.core
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Export-Package: chuck.terran.admin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

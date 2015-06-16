@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="datasource" name="ChView Data Source" schema="schema/datasource.exsd"/>
+   <extension
+         point="jo.chview.util.imagemap">
+      <imagemap name="app_busy0" path="images/app/busy0.png"/>
+      <imagemap name="app_busy1" path="images/app/busy1.png"/>
+      <imagemap name="app_busy2" path="images/app/busy2.png"/>
+      <imagemap name="app_busy3" path="images/app/busy3.png"/>
+      <imagemap name="app_busy4" path="images/app/busy4.png"/>
+      <imagemap name="app_busy5" path="images/app/busy5.png"/>
+      <imagemap name="app_busy6" path="images/app/busy6.png"/>
+      <imagemap name="app_busy7" path="images/app/busy7.png"/>
+      <imagemap name="app_busy8" path="images/app/busy8.png"/>
+      <imagemap name="app_busy9" path="images/app/busy9.png"/>
+      <imagemap name="tb_columns"  path="images/tb/tb_columns.png"/>
+      <imagemap name="tb_copy"     path="images/tb/tb_copy.gif"/>
+      <imagemap name="tb_del"      path="images/tb/tb_del.png"/>
+      <imagemap name="tb_edit"     path="images/tb/tb_edit.png"/>
+      <imagemap name="tb_enlarge"  path="images/tb/tb_enlarge.gif"/>
+      <imagemap name="tb_expand"   path="images/tb/tb_expand.gif"/>
+      <imagemap name="tb_goto"     path="images/tb/tb_goto.gif"/>
+      <imagemap name="tb_grid"     path="images/tb/tb_grid.gif"/>
+      <imagemap name="tb_linknums" path="images/tb/tb_linknums.gif"/>
+      <imagemap name="tb_links"    path="images/tb/tb_links.gif"/>
+      <imagemap name="tb_lock"     path="images/tb/tb_lock.png"/>
+      <imagemap name="tb_names"    path="images/tb/tb_names.gif"/>
+      <imagemap name="tb_paste"    path="images/tb/tb_paste.gif"/>
+      <imagemap name="tb_pin"  	   path="images/tb/tb_pin.png"/>
+      <imagemap name="tb_refresh"  path="images/tb/tb_refresh.png"/>
+      <imagemap name="tb_reduce"   path="images/tb/tb_reduce.gif"/>
+      <imagemap name="tb_routes"   path="images/tb/tb_routes.gif"/>
+      <imagemap name="tb_scope"    path="images/tb/tb_scope.gif"/>
+      <imagemap name="tb_shrink"   path="images/tb/tb_shrink.gif"/>
+      <imagemap name="tb_sky"      path="images/tb/tb_sky.gif"/>
+      <imagemap name="tb_unlock"   path="images/tb/tb_unlock.png"/>
+      <imagemap name="sys_star_o"   path="images/planets/body_star_a.gif"/>
+      <imagemap name="sys_star_b"   path="images/planets/body_star_a.gif"/>
+      <imagemap name="sys_star_a"   path="images/planets/body_star_a.gif"/>
+      <imagemap name="sys_star_f"   path="images/planets/body_star_f.gif"/>
+      <imagemap name="sys_star_g"   path="images/planets/body_star_g.gif"/>
+      <imagemap name="sys_star_k"   path="images/planets/body_star_k.gif"/>
+      <imagemap name="sys_star_m"   path="images/planets/body_star_m.gif"/>
+      <imagemap name="sys_star_l"   path="images/planets/body_star_m.gif"/>
+      <imagemap name="sys_star_t"   path="images/planets/body_star_m.gif"/>
+      <imagemap name="sys_star_y"   path="images/planets/body_star_m.gif"/>
+      <imagemap name="sys_body_unknown"   path="images/planets/Airless.gif"/>
+      <imagemap name="sys_body_rock"   path="images/planets/Airless.gif"/>
+      <imagemap name="sys_body_venusian"   path="images/planets/Venus.gif"/>
+      <imagemap name="sys_body_terrestrial"   path="images/planets/Earth1.gif"/>
+      <imagemap name="sys_body_gas_giant"   path="images/planets/Jupiter.gif"/>
+      <imagemap name="sys_body_martian"   path="images/planets/Mars.gif"/>
+      <imagemap name="sys_body_water"   path="images/planets/Enceladus.gif"/>
+      <imagemap name="sys_body_ice"   path="images/planets/Mimas.gif"/>
+      <imagemap name="sys_body_sub_gas_giant"   path="images/planets/Uranus.gif"/>
+      <imagemap name="sys_body_sub_sub_gas_giant"   path="images/planets/Neptune.gif"/>
+      <imagemap name="sys_body_asteroids"   path="images/planets/Asteroids.gif"/>
+      <imagemap name="sys_body_one_face"   path="images/planets/Oberon.gif"/>
+      
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="jo.d2k.admin.rcp.viz.chview.prefs.ChViewPreferencesInitializer">
+      </initializer>
+   </extension>   
+</plugin>
