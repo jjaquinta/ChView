@@ -2,19 +2,17 @@ package jo.chview.web.logic;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import jo.chview.web.servlet.BaseServlet;
 import jo.d2k.data.data.StarBean;
-import jo.d2k.data.data.StarLink;
+import jo.d2k.data.logic.RuntimeLogic;
 import jo.d2k.data.logic.StarExtraLogic;
 import jo.d2k.data.logic.StarLogic;
+import jo.util.logic.CSVLogic;
+import jo.util.utils.FormatUtils;
 import jo.util.utils.obj.StringUtils;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -46,15 +44,16 @@ public class StarsRequestLogic
         double z = StarLogic.getOrd(quad.charAt(2));
         srv.setHTML();
         srv.println("<HTML>");
-        srv.println("<HEAD><TITLE>Dawnfire 2000 - Atlas</TITLE></HEAD>");
+        srv.println("<HEAD><TITLE>"+RuntimeLogic.getInstance().getDataSource().getName()+" - Atlas</TITLE></HEAD>");
         srv.println("<BODY>");
-        srv.println("<H1>Dawnfire 2000 - Atlas</H1>");
+        srv.println("<H1>"+RuntimeLogic.getInstance().getDataSource().getName()+" - Atlas</H1>");
         srv.println("<H2>Quadrant "+quad+" - "+x+","+y+","+z+"</H2>");
         srv.println("<TABLE>");
         srv.println("<TR>");
         srv.println("<TH>Quad</TH>");
         srv.println("<TH>ID</TH>");
         srv.println("<TH>Name</TH>");
+        srv.println("<TH></TH>");
         srv.println("<TH>Spectra</TH>");
         srv.println("<TH>Magnitude</TH>");
         srv.println("<TH>X,Y,Z</TH>");
@@ -67,6 +66,8 @@ public class StarsRequestLogic
             srv.println("<TD>"+star.getOID()+"</TD>");
             srv.println("<TD>");
             srv.println("<A HREF='"+srv.getRequest().getContextPath()+"/chview/"+star.getQuadrant()+"/"+star.getOID()+"?f=html'>"+star.getName()+"</A>");
+            srv.println("</TD>");
+            srv.println("<TD>");
             if (!StringUtils.isTrivial(star.getWikipediaURL()))
                 srv.println("<A HREF='http://en.wikipedia.org"+star.getWikipediaURL()+"'><IMG src='"+srv.getRequest().getContextPath()+"/images/wikipedia.png'/></A>");
             if (!StringUtils.isTrivial(star.getSimbadURL()))
@@ -74,8 +75,13 @@ public class StarsRequestLogic
             srv.println("</TD>");
             srv.println("<TD>"+star.getSpectra()+"</TD>");
             srv.println("<TD>"+star.getAbsMag()+"</TD>");
-            srv.println("<TD>"+star.getX()+","+star.getY()+","+star.getZ()+"</TD>");
-            srv.println("<TD>"+star.getParent()+"</TD>");
+            srv.println("<TD>"+FormatUtils.formatDouble(star.getX(), 2)+","
+                    +FormatUtils.formatDouble(star.getY(), 2)+","
+                    +FormatUtils.formatDouble(star.getZ(), 2)+"</TD>");
+            srv.println("<TD>");
+            if (star.getParentRef() != null)
+                srv.println(star.getParentRef().getName());
+            srv.println("</TD>");
             srv.println("</TR>");
         }
         srv.println("</TABLE>");
@@ -248,29 +254,13 @@ public class StarsRequestLogic
     {
         JSONObject root = new JSONObject();
         root.put("quad", quad);
-        JSONArray jStars = new JSONArray();
+        JSONObject jStars = new JSONObject();
         root.put("stars", jStars);
-        Map<Long, JSONObject> oidToStar = new HashMap<Long, JSONObject>();
-        Map<Long, Integer> oidToIndex = new HashMap<Long, Integer>();
-        List<StarBean> todoChildren = new ArrayList<StarBean>();
         for (StarBean star : stars)
         {
-            if (star.getParent() > 0)
-            {   // child
-                if (!addChild(star, oidToStar))
-                    todoChildren.add(star);
-            }
-            else
-            {   // parent
-                System.out.println("Parent: "+star.getName());
-                JSONObject jStar = makeStar(star);
-                jStars.add(jStar);
-                oidToStar.put(star.getOID(), jStar);
-                oidToIndex.put(star.getOID(), jStars.size() - 1);
-            }
+            JSONObject jStar = makeStar(star, false);
+            jStars.put(star.getOID(), jStar);
         }
-        for (StarBean star : todoChildren)
-            addChild(star, oidToStar);
         String json = JSONValue.toJSONString(root);
         srv.setContentType("text/json");
         srv.println(json);
@@ -279,81 +269,54 @@ public class StarsRequestLogic
     private static void respondCSV(BaseServlet srv, List<StarBean> stars) throws IOException
     {
         srv.setContentType("text/plain");
-        double linkSize = srv.getDoubleParameter("linkSize", -1);
-        int firstLine = srv.getIntParameter("firstLine", 0);
-        int lastLine = srv.getIntParameter("lastLine", Integer.MAX_VALUE);
-        StringBuffer line = new StringBuffer();
-        int lineNo = 0;
+        List<Object> line = new ArrayList<Object>();
         for (StarBean star : stars)
         {
-            line.setLength(0);
-            line.append("O");
-            line.append(","+star.getName());
-            line.append(","+star.getSpectra());
-            line.append(","+String.format("%.2f", star.getX()));
-            line.append(","+String.format("%.2f", star.getY()));
-            line.append(","+String.format("%.2f", star.getZ()));
-            if ((lineNo >= firstLine) && (lineNo < lastLine))
-                srv.println(line.toString());
-            lineNo++;
-        }
-        if (linkSize > 0)
-        {
-            //int linkLimit = getIntParameter("linkLimit", 0);
-            List<StarLink> links = StarExtraLogic.findLinks(stars, linkSize);
-            for (Iterator<StarLink> i = links.iterator(); i.hasNext(); )
-                if (i.next().getDistance() < 1)
-                    i.remove();
-            //if (linkLimit > 0)
-            //    StarExtraLogic.pruneLinks(links, linkLimit);
-            for (StarLink link : links)
-            {
-                line.setLength(0);
-                line.append("L");
-                line.append(","+String.format("%.2f", link.getDistance()));
-                line.append(","+String.format("%.2f", link.getStar1().getX()));
-                line.append(","+String.format("%.2f", link.getStar1().getY()));
-                line.append(","+String.format("%.2f", link.getStar1().getZ()));
-                line.append(","+String.format("%.2f", link.getStar2().getX()));
-                line.append(","+String.format("%.2f", link.getStar2().getY()));
-                line.append(","+String.format("%.2f", link.getStar2().getZ()));
-                if ((lineNo >= firstLine) && (lineNo < lastLine))
-                    srv.println(line.toString());
-                lineNo++;
-            }
+            makeStar(star, line);
+            srv.println(CSVLogic.toCSVLine(line));
         }
     }
 
+    public static void makeStar(StarBean star, List<Object> line)
+    {
+        line.clear();
+        line.add("O");
+        line.add(star.getQuadrant());
+        line.add(star.getOID());
+        line.add(star.getName());
+        line.add(star.getSpectra());
+        line.add(star.getX());
+        line.add(star.getY());
+        line.add(star.getZ());
+        line.add(star.getAbsMag());
+        line.add(star.getParent());
+        line.add(star.isGenerated());
+    }
+
     @SuppressWarnings("unchecked")
-    private static JSONObject makeStar(StarBean star)
+    public static JSONObject makeStar(StarBean star, boolean names)
     {
         JSONObject jStar = new JSONObject();
+        jStar.put("quadrant", star.getQuadrant());
         jStar.put("oid", star.getOID());
+        jStar.put("name", star.getName());
+        jStar.put("spectra", star.getSpectra());
         jStar.put("x", star.getX());
         jStar.put("y", star.getY());
         jStar.put("z", star.getZ());
-        jStar.put("name", star.getName());
-        jStar.put("spectra", star.getSpectra());
         jStar.put("absmag", star.getAbsMag());
-        jStar.put("color", StarExtraLogic.getStarColorRGB(star));
-        return jStar;
-    }
-    
-    @SuppressWarnings("unchecked")
-    private static boolean addChild(StarBean child, Map<Long, JSONObject> oidToStar)
-    {
-        //System.out.println("Child: "+child.getName());
-        JSONObject jParent = oidToStar.get(child.getParent());
-        if (jParent == null)
-            return false;
-        JSONArray jChildren = (JSONArray)jParent.get("children");
-        if (jChildren == null)
+        jStar.put("parent", star.getParent());
+        jStar.put("generated", star.isGenerated());
+        if (names)
         {
-            jChildren = new JSONArray();
-            jParent.put("children", jChildren);
+            jStar.put("Common", star.getCommonName());
+            jStar.put("HIP", star.getHIPName());
+            jStar.put("GJ", star.getGJName());
+            jStar.put("HD", star.getHDName());
+            jStar.put("HR", star.getHRName());
+            jStar.put("SAO", star.getSAOName());
+            jStar.put("2Mass", star.getTwoMassName());
         }
-        JSONObject jChild = makeStar(child);
-        jChildren.add(jChild);
-        return true;
+        return jStar;
     }
 }

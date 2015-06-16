@@ -8,10 +8,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  jo.chview.util,
  jo.chview.rcp,
- org.eclipse.core.resources;bundle-version="3.9.1",
+ org.eclipse.core.resources,
  jo.chview.core,
  jo.chview.util.core
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: chuck.terran.admin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
