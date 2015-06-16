@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>ChView</display-name>
+  <servlet>
+    <servlet-name>test</servlet-name>
+    <servlet-class>jo.chview.web.servlet.Test</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>chview</servlet-name>
+    <servlet-class>jo.chview.web.servlet.ChViewServlet</servlet-class>
+    <init-param><param-name>dataSourceType</param-name><param-value>MYSQL</param-value></init-param> 
+	<init-param><param-name>dataSourceName</param-name><param-value>Dawnfire 2000</param-value></init-param>
+	<init-param><param-name>dataSourceURI</param-name><param-value>jdbc:mysql://www.ocean-of-storms.com/ocean50_d2k?user=ocean50_d2kchuck&amp;password=1oBBTGd6Z5uq</param-value></init-param> 
+	<init-param><param-name>dataSourceReadOnly</param-name><param-value>true</param-value></init-param>
+	<init-param><param-name>dataSourceDefault</param-name><param-value>true</param-value></init-param>    
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>test</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>chview</servlet-name>
+    <url-pattern>/chview/*</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
