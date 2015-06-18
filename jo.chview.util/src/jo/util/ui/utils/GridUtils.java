@@ -160,7 +160,8 @@ public class GridUtils
             setLayoutData(c, style);
         else
             setLayoutData(c, "fill=h");
-        ComboUtils.addAll(c, elements);
+        if (elements != null)
+            ComboUtils.addAll(c, elements);
         return c;
     }
     public static Combo makeCombo(Composite parent, Collection<?> elements, String style)

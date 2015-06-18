@@ -25,7 +25,7 @@ public class TextSchemaController implements ISchemaController
     {
         GridUtils.makeLabel(parent, schema.getTitle()+":", "align=nw");
         Text ctrl;
-        final int width = IntegerUtils.parseInt(schema.getSubType()[0]);
+        final int width = (((schema.getSubType() != null) && (schema.getSubType().length > 0)) ? IntegerUtils.parseInt(schema.getSubType()[0]) : 0);
         int style = readOnly ? SWT.READ_ONLY : SWT.NULL;
         if (width > 40)
             ctrl = GridUtils.makeText(parent, style|SWT.MULTI|SWT.WRAP|SWT.H_SCROLL|SWT.V_SCROLL, "6x1 fill=hv");

@@ -1,5 +1,7 @@
 package jo.d2k.data.logic.schema;
 
+import java.util.List;
+
 import jo.d2k.data.data.ChViewContextBean;
 import jo.d2k.data.data.FilterConditionBean;
 import jo.d2k.data.data.StarBean;
@@ -23,8 +25,11 @@ public class NotSchemaComparator implements ISchemaComparator
     public boolean isMatch(ChViewContextBean context, StarBean star,
             FilterConditionBean cond)
     {
-        FilterConditionBean subCond = (FilterConditionBean)cond.getArgument();
-        return !FilterLogic.isFiltered(context, star, subCond);
+        @SuppressWarnings("unchecked")
+        List<FilterConditionBean> subCond = (List<FilterConditionBean>)cond.getArgument();
+        if (subCond.size() == 0)
+            return false;
+        return !FilterLogic.isFiltered(context, star, subCond.get(0));
     }
 
     @Override

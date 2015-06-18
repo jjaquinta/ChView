@@ -3,8 +3,10 @@ package jo.d2k.data.logic;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import jo.d2k.data.data.ChViewContextBean;
@@ -18,14 +20,16 @@ import jo.util.utils.FormatUtils;
 
 public class StarColumnLogic
 {
-    private static List<StarColumn> mColumns = null;
+    private static List<StarColumn> mAllColumns = null;
+    private static List<StarColumn> mPotentialColumns = null;
+    private static Map<String,StarColumn> mColumnIndex = null;
     private static boolean mInit = false;
     private static PropChangeSupport mPCS = new PropChangeSupport(StarColumnLogic.class);
 
-    public static List<StarColumn> getPotentialColumns()
+    public static List<StarColumn> getAllColumns()
     {
-        if (mColumns != null)
-            return mColumns;
+        if (mAllColumns != null)
+            return mAllColumns;
         if (!mInit)
         {
             mInit = true;
@@ -33,64 +37,80 @@ public class StarColumnLogic
                 @Override
                 public void propertyChange(PropertyChangeEvent evt)
                 {
-                    mColumns = null; // reset on data source change
-                    mPCS.fireMonotonicPropertyChange("columns", mColumns);
+                    mAllColumns = null; // reset on data source change
+                    mPotentialColumns = null;
+                    mPCS.fireMonotonicPropertyChange("columns", mAllColumns);
                 }
             });
         }
-        mColumns = new ArrayList<StarColumn>();
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.NAME, "Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.COMMON_NAME, "Common Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.HIP_NAME, "HIP Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.GJ_NAME, "GJ Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.HD_NAME, "HD Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.HR_NAME, "HR Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.SAO_NAME, "SAO Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.TWOMASS_NAME, "2MASS Name"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "quadrant", "Quadrant"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "x,y,z", "Coords"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "x", "X", 50, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns = new ArrayList<StarColumn>();
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.NAME, "Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.COMMON_NAME, "Common Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.HIP_NAME, "HIP Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.GJ_NAME, "GJ Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.HD_NAME, "HD Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.HR_NAME, "HR Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.SAO_NAME, "SAO Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.TWOMASS_NAME, "2MASS Name"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "quadrant", "Quadrant"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "x,y,z", "Coords"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "x", "X", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "y", "Y", 50, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "y", "Y", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "z", "Z", 50, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "z", "Z", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "spectra", "Spectrum"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "apparentMagnitude", "App Mag", 50, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "spectra", "Spectrum"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "apparentMagnitude", "App Mag", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "parent", "Parent"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "simbadURL", "Simbad"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "wikipediaURL", "Wikipedia"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "generated", "Generated"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "ra", "RA", 100, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "parent", "Parent"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "simbadURL", "Simbad", 127, StarSchemaBean.SORT_BY_TEXT,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.LINK)));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "wikipediaURL", "Wikipedia", 127, StarSchemaBean.SORT_BY_TEXT,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.LINK)));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "generated", "Generated"));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "ra", "RA", 100, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dec", "Dec", 100, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dec", "Dec", 100, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "plx", "Plx", 50, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "plx", "Plx", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dist", "Dist", 50, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dist", "Dist", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "absoluteMagnitude", "Abs Mag", 50, StarSchemaBean.SORT_BY_NUMBER,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "absoluteMagnitude", "Abs Mag", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
         for (StarSchemaBean schema : StarSchemaLogic.getSchemas())
-            mColumns.add(new StarColumn(StarColumn.TYPE_EXTRA, schema.getMetadataID(), schema.getTitle(),
+            mAllColumns.add(new StarColumn(StarColumn.TYPE_EXTRA, schema.getMetadataID(), schema.getTitle(),
                     schema.getWidth(), schema.getSortBy(),
                     StarSchemaComparatorLogic.getComparator(schema.getType())));
-        mColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "AND", "AND", 0, 0,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "AND", "AND", 0, 0,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.AND)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "OR", "OR", 0, 0,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "OR", "OR", 0, 0,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.OR)));
-        mColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "NOT", "NOT", 0, 0,
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "NOT", "NOT", 0, 0,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.NOT)));
-        return mColumns;
+        mColumnIndex = new HashMap<String, StarColumn>();
+        for (StarColumn col : mAllColumns)
+            mColumnIndex.put(col.getID(), col);
+        mPotentialColumns = null;
+        return mAllColumns;
+    }
+
+    public static List<StarColumn> getPotentialColumns()
+    {
+        if (mPotentialColumns != null)
+            return mPotentialColumns;
+        mPotentialColumns = new ArrayList<StarColumn>();
+        for (StarColumn col : getAllColumns())
+            if (col.getType() != StarColumn.TYPE_PSEUDO)
+                mPotentialColumns.add(col);
+        return mPotentialColumns;            
     }
     
     public static StarColumn getColumn(String id)
     {
-        for (StarColumn column : getPotentialColumns())
-            if (column.getID().equals(id))
-                return column;
-        return null;
+        getAllColumns();
+        return mColumnIndex.get(id);
     }
     
     public static List<StarColumn> getDefaultColumns()

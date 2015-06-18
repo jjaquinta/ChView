@@ -33,13 +33,23 @@ public class GenericTreeContentProvider implements ITreeContentProvider
         mViewer = viewer;
         mInput = newInput;
     }
+    
+    protected Object[] doGetChildren(Object parent)
+    {
+        return new Object[0];
+    }
 
     @Override
     public Object[] getChildren(Object parent)
     {
+        Object[] children;
         if (!mHierarchy.containsKey(parent))
-            return new Object[0];
-        Object[] children = mHierarchy.get(parent);
+        {
+            children = doGetChildren(parent);
+            mHierarchy.put(parent, children);
+        }
+        else
+            children = mHierarchy.get(parent);
         for (Object c : children)
             mParents.put(c, parent);
         return children;

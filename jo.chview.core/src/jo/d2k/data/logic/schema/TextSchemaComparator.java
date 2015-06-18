@@ -40,7 +40,11 @@ public class TextSchemaComparator extends SimpleSchemaComparator
     @Override
     public boolean isMatch(Object v, int option, Object arg)
     {
-        String val = (String)v;
+        String val;
+        if (v == null)
+            val = "";
+        else
+            val = v.toString();
         switch (option)
         {
             case 0: // equals

@@ -30,4 +30,12 @@ public class StarSchemaComparatorLogic
     {
         return mSchemaComparators.get(type);
     }
+    
+    public static int getType(ISchemaComparator comp)
+    {
+        for (Integer type : mSchemaComparators.keySet())
+            if (comp == mSchemaComparators.get(type))
+                return type;
+        throw new IllegalArgumentException("Unknown comparator "+comp.getClass().getName());
+    }
 }

@@ -55,4 +55,10 @@ public class ControlUtils
         else
             ctrl.setEnabled(enabled);
     }
+
+    public static void removeAll(Composite parent)
+    {
+        for (Control c : parent.getChildren())
+            c.dispose();
+    }
 }
