@@ -16,6 +16,9 @@ public class StarSchemaComparatorLogic
         mSchemaComparators.put(StarSchemaBean.CHOICE, new ChoiceSchemaComparator());
         mSchemaComparators.put(StarSchemaBean.TAGS, new TagsSchemaComparator());
         mSchemaComparators.put(StarSchemaBean.LINK, new LinkSchemaComparator());
+        mSchemaComparators.put(StarSchemaBean.AND, new AndSchemaComparator());
+        mSchemaComparators.put(StarSchemaBean.OR, new OrSchemaComparator());
+        mSchemaComparators.put(StarSchemaBean.NOT, new NotSchemaComparator());
     }
 
     public static ISchemaComparator getComparator(StarSchemaBean schema)

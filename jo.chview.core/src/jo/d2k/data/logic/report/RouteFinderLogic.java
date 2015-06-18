@@ -52,7 +52,7 @@ public class RouteFinderLogic
                 i.remove();
             else if ((exclude != null) && exclude.contains(star))
                 i.remove();
-            else if ((filter != null) && FilterLogic.isFiltered(star, filter))
+            else if ((filter != null) && FilterLogic.isFiltered(params, star, filter))
                 i.remove();
         }
         return computeRoute(stars, d, o1, o2);

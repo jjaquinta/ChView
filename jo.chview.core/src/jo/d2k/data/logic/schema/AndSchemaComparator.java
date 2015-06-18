@@ -30,4 +30,9 @@ public class AndSchemaComparator implements ISchemaComparator
         return FilterLogic.isFiltered(context, star, conds, true);
     }
 
+    @Override
+    public int getDefaultOption()
+    {
+        return 0;
+    }
 }

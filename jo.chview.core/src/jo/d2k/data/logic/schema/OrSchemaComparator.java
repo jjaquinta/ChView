@@ -30,4 +30,10 @@ public class OrSchemaComparator implements ISchemaComparator
         return FilterLogic.isFiltered(context, star, conds, false);
     }
 
+    @Override
+    public int getDefaultOption()
+    {
+        return 0;
+    }
+
 }

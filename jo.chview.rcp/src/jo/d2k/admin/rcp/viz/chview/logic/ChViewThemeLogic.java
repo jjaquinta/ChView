@@ -155,18 +155,7 @@ public class ChViewThemeLogic
         props.put("showRoutes",  String.valueOf(params.isShowRoutes()));
         props.put("showScope",  String.valueOf(params.isShowScope()));
         props.put("showGrid",  String.valueOf(params.isShowGrid()));
-        props.put("filter.spectraO",  String.valueOf(params.getFilter().isSpectraO()));
-        props.put("filter.spectraB",  String.valueOf(params.getFilter().isSpectraB()));
-        props.put("filter.spectraA",  String.valueOf(params.getFilter().isSpectraA()));
-        props.put("filter.spectraF",  String.valueOf(params.getFilter().isSpectraF()));
-        props.put("filter.spectraG",  String.valueOf(params.getFilter().isSpectraG()));
-        props.put("filter.spectraK",  String.valueOf(params.getFilter().isSpectraK()));
-        props.put("filter.spectraM",  String.valueOf(params.getFilter().isSpectraM()));
-        props.put("filter.spectraL",  String.valueOf(params.getFilter().isSpectraL()));
-        props.put("filter.spectraT",  String.valueOf(params.getFilter().isSpectraT()));
-        props.put("filter.spectraY",  String.valueOf(params.getFilter().isSpectraY()));
-        if (params.getFilter().getGenerated() != null)
-            props.put("filter.generated",  String.valueOf(params.getFilter().getGenerated()));
+        // TODO: persist filter
         if (params.getFocus() != null)
             props.put("focus",  params.getFocus().getQuadrant()+":"+params.getFocus().getOID());
         toProps(props, "selected.", params.getSelected());
@@ -192,21 +181,8 @@ public class ChViewThemeLogic
         params.setShowRoutes(BooleanUtils.parseBoolean(props.getProperty("showRoutes")));
         params.setShowScope(BooleanUtils.parseBoolean(props.getProperty("showScope")));
         params.setShowGrid(BooleanUtils.parseBoolean(props.getProperty("showGrid")));
-        params.getFilter().setSpectraO(BooleanUtils.parseBoolean(props.getProperty("filter.spectraO")));
-        params.getFilter().setSpectraB(BooleanUtils.parseBoolean(props.getProperty("filter.spectraB")));
-        params.getFilter().setSpectraA(BooleanUtils.parseBoolean(props.getProperty("filter.spectraA")));
-        params.getFilter().setSpectraF(BooleanUtils.parseBoolean(props.getProperty("filter.spectraF")));
-        params.getFilter().setSpectraG(BooleanUtils.parseBoolean(props.getProperty("filter.spectraG")));
-        params.getFilter().setSpectraK(BooleanUtils.parseBoolean(props.getProperty("filter.spectraK")));
-        params.getFilter().setSpectraM(BooleanUtils.parseBoolean(props.getProperty("filter.spectraM")));
-        params.getFilter().setSpectraL(BooleanUtils.parseBoolean(props.getProperty("filter.spectraL")));
-        params.getFilter().setSpectraT(BooleanUtils.parseBoolean(props.getProperty("filter.spectraT")));
-        params.getFilter().setSpectraY(BooleanUtils.parseBoolean(props.getProperty("filter.spectraY")));
-        if (props.containsKey("filter.generated"))
-            params.getFilter().setGenerated(BooleanUtils.parseBoolean(props.getProperty("filter.generated")));
-        else
-            params.getFilter().setGenerated(null);
-            props.getProperty("filter.generated",  String.valueOf(params.getFilter().getGenerated()));
+        // TODO: restore filter
+        params.getFilter().getConditions().clear();
         fromProps("selected.", params.getSelected(), props);
         fromProps("hidden.", params.getHidden(), props);
     }

@@ -54,7 +54,7 @@ public class StarSearchLogic
             }
         }
         if (filter)
-            if (!FilterLogic.isFiltered(star, params.getFilter()))
+            if (!FilterLogic.isFiltered(context, star, params.getFilter()))
                 return false;
         return true;
     }

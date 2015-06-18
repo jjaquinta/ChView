@@ -4,6 +4,12 @@ import jo.util.utils.obj.StringUtils;
 
 public class TextSchemaComparator extends SimpleSchemaComparator
 {
+    public static final int EQUALS = 0;
+    public static final int NOTEQUALS = 1;
+    public static final int CONTAINS = 2;
+    public static final int EMPTY = 3;
+    public static final int NOTEMPTY = 4;
+    
     private static final String[] OPTIONS = {
         "Equals",
         "Not Equals",
@@ -49,5 +55,11 @@ public class TextSchemaComparator extends SimpleSchemaComparator
                 return !StringUtils.isTrivial(val);
         }
         return false;
+    }
+
+    @Override
+    public int getDefaultOption()
+    {
+        return 0;
     }
 }

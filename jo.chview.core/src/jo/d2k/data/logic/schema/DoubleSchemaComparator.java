@@ -55,4 +55,10 @@ public class DoubleSchemaComparator extends SimpleSchemaComparator
         }
         return false;
     }
+
+    @Override
+    public int getDefaultOption()
+    {
+        return 2;
+    }
 }

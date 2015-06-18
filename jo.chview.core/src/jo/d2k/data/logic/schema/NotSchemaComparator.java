@@ -27,4 +27,10 @@ public class NotSchemaComparator implements ISchemaComparator
         return !FilterLogic.isFiltered(context, star, subCond);
     }
 
+    @Override
+    public int getDefaultOption()
+    {
+        return 0;
+    }
+
 }

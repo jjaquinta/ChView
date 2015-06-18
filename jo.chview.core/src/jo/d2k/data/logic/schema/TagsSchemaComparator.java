@@ -34,7 +34,11 @@ public class TagsSchemaComparator extends SimpleSchemaComparator
     @Override
     public boolean isMatch(Object v, int option, Object a)
     {
-        String val = " "+v.toString().toLowerCase()+" ";
+        String val;
+        if (v == null)
+            val = "";
+        else
+            val = " "+v.toString().toLowerCase()+" ";
         String arg = " "+a.toString().trim().toLowerCase()+" ";
         switch (option)
         {
@@ -50,5 +54,11 @@ public class TagsSchemaComparator extends SimpleSchemaComparator
                 return StringUtils.isTrivial(val);
         }
         return false;
+    }
+
+    @Override
+    public int getDefaultOption()
+    {
+        return 0;
     }
 }

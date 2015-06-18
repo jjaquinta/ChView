@@ -38,4 +38,10 @@ public class LinkSchemaComparator extends SimpleSchemaComparator
         }
         return false;
     }
+
+    @Override
+    public int getDefaultOption()
+    {
+        return 1;
+    }
 }

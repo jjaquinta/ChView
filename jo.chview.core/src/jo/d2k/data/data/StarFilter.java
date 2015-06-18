@@ -1,124 +1,64 @@
 package jo.d2k.data.data;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+import jo.d2k.data.logic.schema.TextSchemaComparator;
 import jo.util.beans.Bean;
+import jo.util.intro.PseudoProp;
+import jo.util.utils.obj.BooleanUtils;
 
 public class StarFilter extends Bean
 {
-    private boolean mSpectraO;
-    private boolean mSpectraB;
-    private boolean mSpectraA;
-    private boolean mSpectraF;
-    private boolean mSpectraG;
-    private boolean mSpectraK;
-    private boolean mSpectraM;
-    private boolean mSpectraL;
-    private boolean mSpectraT;
-    private boolean mSpectraY;
-    private Boolean mGenerated;
-    private Map<String,String>  mExtraFields;
+    private List<FilterConditionBean> mConditions;
+    private boolean mAnd;
     
     public StarFilter()
     {
-        mExtraFields = new HashMap<String, String>();
+        mConditions = new ArrayList<FilterConditionBean>();
+        mAnd = false;
     }
-    
-    public boolean isSpectraO()
+
+    public List<FilterConditionBean> getConditions()
     {
-        return mSpectraO;
+        return mConditions;
     }
-    public void setSpectraO(boolean spectraO)
+
+    public void setConditions(List<FilterConditionBean> conditions)
     {
-        mSpectraO = spectraO;
+        mConditions = conditions;
     }
-    public boolean isSpectraB()
+
+    public boolean isAnd()
     {
-        return mSpectraB;
+        return mAnd;
     }
-    public void setSpectraB(boolean spectraB)
+
+    public void setAnd(boolean and)
     {
-        mSpectraB = spectraB;
+        mAnd = and;
     }
-    public boolean isSpectraA()
-    {
-        return mSpectraA;
-    }
-    public void setSpectraA(boolean spectraA)
-    {
-        mSpectraA = spectraA;
-    }
-    public boolean isSpectraF()
-    {
-        return mSpectraF;
-    }
-    public void setSpectraF(boolean spectraF)
-    {
-        mSpectraF = spectraF;
-    }
-    public boolean isSpectraG()
-    {
-        return mSpectraG;
-    }
-    public void setSpectraG(boolean spectraG)
-    {
-        mSpectraG = spectraG;
-    }
-    public boolean isSpectraK()
-    {
-        return mSpectraK;
-    }
-    public void setSpectraK(boolean spectraK)
-    {
-        mSpectraK = spectraK;
-    }
-    public boolean isSpectraM()
-    {
-        return mSpectraM;
-    }
-    public void setSpectraM(boolean spectraM)
-    {
-        mSpectraM = spectraM;
-    }
-    public boolean isSpectraL()
-    {
-        return mSpectraL;
-    }
-    public void setSpectraL(boolean spectraL)
-    {
-        mSpectraL = spectraL;
-    }
-    public boolean isSpectraT()
-    {
-        return mSpectraT;
-    }
-    public void setSpectraT(boolean spectraT)
-    {
-        mSpectraT = spectraT;
-    }
-    public boolean isSpectraY()
-    {
-        return mSpectraY;
-    }
-    public void setSpectraY(boolean spectraY)
-    {
-        mSpectraY = spectraY;
-    }
+
+    @PseudoProp
     public Boolean getGenerated()
     {
-        return mGenerated;
-    }
-    public void setGenerated(Boolean generated)
-    {
-        mGenerated = generated;
-    }
-    public Map<String, String> getExtraFields()
-    {
-        return mExtraFields;
-    }
-    public void setExtraFields(Map<String, String> extraFields)
-    {
-        mExtraFields = extraFields;
+        for (FilterConditionBean cond : mConditions)
+            if ("generated".equals(cond.getID()))
+            {
+                switch (cond.getOption())
+                {
+                    case TextSchemaComparator.EQUALS:
+                        return BooleanUtils.parseBoolean(cond.getArgument());
+                    case TextSchemaComparator.NOTEQUALS:
+                        return !BooleanUtils.parseBoolean(cond.getArgument());
+                    case TextSchemaComparator.CONTAINS:
+                        return BooleanUtils.parseBoolean(cond.getArgument());
+                    case TextSchemaComparator.EMPTY:
+                        return false;
+                    case TextSchemaComparator.NOTEMPTY:
+                        return true;
+                }
+            }
+        return null;
     }
 }

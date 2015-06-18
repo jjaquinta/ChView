@@ -9,6 +9,7 @@ public class StarColumn
     public static final int TYPE_INTRINSIC = 0;
     public static final int TYPE_EXTRA = 1;
     public static final int TYPE_CALCULATED = 2;
+    public static final int TYPE_PSEUDO = 3;
     
     private int mType;
     private String  mTitle;

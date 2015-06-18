@@ -439,7 +439,7 @@ public class ChViewRenderLogic
     {
         if (mParams.getHidden().contains(star))
             return true;
-        if (FilterLogic.isFiltered(star, mParams.getFilter()))
+        if (FilterLogic.isFiltered(mParams, star, mParams.getFilter()))
             return true;
         return false;
     }

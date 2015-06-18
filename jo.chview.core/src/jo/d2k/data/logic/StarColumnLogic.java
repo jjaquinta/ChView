@@ -76,6 +76,12 @@ public class StarColumnLogic
             mColumns.add(new StarColumn(StarColumn.TYPE_EXTRA, schema.getMetadataID(), schema.getTitle(),
                     schema.getWidth(), schema.getSortBy(),
                     StarSchemaComparatorLogic.getComparator(schema.getType())));
+        mColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "AND", "AND", 0, 0,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.AND)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "OR", "OR", 0, 0,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.OR)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_PSEUDO, "NOT", "NOT", 0, 0,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.NOT)));
         return mColumns;
     }
     
@@ -102,8 +108,8 @@ public class StarColumnLogic
         for (StarColumn used : usedColumns)
             usedIDs.add(used.getID());
         List<StarColumn> columns = new ArrayList<StarColumn>();
-        for (StarColumn column : getPotentialColumns())
-            if (!usedIDs.contains(column.getID()))
+        for (StarColumn column : getPotentialColumns())            
+            if (!usedIDs.contains(column.getID()) && (column.getType() != StarColumn.TYPE_PSEUDO))
                 columns.add(column);
         return columns;
     }

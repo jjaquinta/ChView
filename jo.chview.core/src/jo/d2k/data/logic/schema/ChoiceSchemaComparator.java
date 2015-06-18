@@ -46,4 +46,10 @@ public class ChoiceSchemaComparator extends SimpleSchemaComparator
         }
         return false;
     }
+
+    @Override
+    public int getDefaultOption()
+    {
+        return 0;
+    }
 }

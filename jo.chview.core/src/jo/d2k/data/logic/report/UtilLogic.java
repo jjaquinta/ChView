@@ -13,10 +13,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import jo.d2k.data.data.ChViewContextBean;
+import jo.d2k.data.data.FilterConditionBean;
 import jo.d2k.data.data.StarBean;
+import jo.d2k.data.data.StarColumn;
 import jo.d2k.data.data.StarFilter;
 import jo.d2k.data.logic.FilterLogic;
+import jo.d2k.data.logic.StarColumnLogic;
 import jo.d2k.data.logic.StarLogic;
+import jo.d2k.data.logic.schema.ISchemaComparator;
 import jo.util.geom3d.Point3D;
 
 /**
@@ -131,7 +135,7 @@ public class UtilLogic
             StarBean star = i.next();
             if (star.getParent() != 0)
                 i.remove();
-            else if (FilterLogic.isFiltered(star, filter))
+            else if (FilterLogic.isFiltered(params, star, filter))
                 i.remove();
         }
     }
@@ -141,32 +145,34 @@ public class UtilLogic
         if (!FilterLogic.isAnyFilter(filter))
             return;
         sb.append("<h2>Filtered Out:</h2>");
+        reportFilter(sb, filter.getConditions());
+    }
+    @SuppressWarnings("unchecked")
+    public static void reportFilter(StringBuffer sb, List<FilterConditionBean> conds)
+    {
         sb.append("<ul>");
-        if (filter.isSpectraO())
-            sb.append("<li>O Class Stars</li>");
-        if (filter.isSpectraB())
-            sb.append("<li>B Class Stars</li>");
-        if (filter.isSpectraA())
-            sb.append("<li>A Class Stars</li>");
-        if (filter.isSpectraF())
-            sb.append("<li>F Class Stars</li>");
-        if (filter.isSpectraG())
-            sb.append("<li>G Class Stars</li>");
-        if (filter.isSpectraK())
-            sb.append("<li>K Class Stars</li>");
-        if (filter.isSpectraM())
-            sb.append("<li>M Class Stars</li>");
-        if (filter.isSpectraL())
-            sb.append("<li>L Class Stars</li>");
-        if (filter.isSpectraT())
-            sb.append("<li>T Class Stars</li>");
-        if (filter.isSpectraY())
-            sb.append("<li>Y Class Stars</li>");
-        if (filter.getGenerated() != null)
-            if (filter.getGenerated())
-                sb.append("<li>Generated Stars</li>");
+        for (FilterConditionBean cond : conds)
+        {
+            sb.append("<li>");
+            StarColumn col = StarColumnLogic.getColumn(cond.getID());
+            sb.append(col.getTitle());
+            sb.append(" ");
+            if (col.getType() == StarColumn.TYPE_PSEUDO)
+            {
+                reportFilter(sb, (List<FilterConditionBean>)cond.getArgument());
+            }
             else
-                sb.append("<li>Non-generated Stars</li>");
+            {
+            ISchemaComparator comp = col.getComparator();
+            sb.append(comp.getOptions()[cond.getOption()]);
+            if (comp.isArgFor(cond.getOption()))
+            {
+                sb.append(" ");
+                sb.append(cond.getArgument().toString());
+            }
+            }
+            sb.append("</li>");
+        }
         sb.append("</ul>");
     }
 }

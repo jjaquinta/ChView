@@ -1,7 +1,15 @@
 package jo.d2k.admin.rcp.viz.chview;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import jo.d2k.admin.rcp.sys.ui.schema.StarSchemaUIController;
+import jo.d2k.data.data.FilterConditionBean;
+import jo.d2k.data.data.StarColumn;
 import jo.d2k.data.data.StarFilter;
+import jo.d2k.data.logic.StarColumnLogic;
+import jo.d2k.data.logic.schema.TextSchemaComparator;
 import jo.util.ui.utils.GridUtils;
 
 import org.eclipse.swt.SWT;
@@ -50,45 +58,110 @@ public class FilterPanel extends Composite
     
     public StarFilter getFilter()
     {
-        mFilter.setSpectraO(mSpectraO.getSelection());
-        mFilter.setSpectraB(mSpectraB.getSelection());
-        mFilter.setSpectraA(mSpectraA.getSelection());
-        mFilter.setSpectraF(mSpectraF.getSelection());
-        mFilter.setSpectraG(mSpectraG.getSelection());
-        mFilter.setSpectraK(mSpectraK.getSelection());
-        mFilter.setSpectraM(mSpectraM.getSelection());
-        mFilter.setSpectraL(mSpectraL.getSelection());
-        mFilter.setSpectraT(mSpectraT.getSelection());
-        mFilter.setSpectraY(mSpectraY.getSelection());
-        if (mGenerated.getSelectionIndex() == 0)
-            mFilter.setGenerated(null);        
-        else if (mGenerated.getSelectionIndex() == 1)
-            mFilter.setGenerated(true);
-        else
-            mFilter.setGenerated(false);
-        mSchemaController.getMetadata(mFilter.getExtraFields());
+        List<FilterConditionBean> ors = mFilter.getConditions();
+        ors.clear();
+        addSpectraFilter(ors, mSpectraO.getSelection(), "O");
+        addSpectraFilter(ors, mSpectraB.getSelection(), "B");
+        addSpectraFilter(ors, mSpectraA.getSelection(), "A");
+        addSpectraFilter(ors, mSpectraF.getSelection(), "F");
+        addSpectraFilter(ors, mSpectraG.getSelection(), "G");
+        addSpectraFilter(ors, mSpectraK.getSelection(), "K");
+        addSpectraFilter(ors, mSpectraM.getSelection(), "M");
+        addSpectraFilter(ors, mSpectraL.getSelection(), "L");
+        addSpectraFilter(ors, mSpectraT.getSelection(), "T");
+        addSpectraFilter(ors, mSpectraY.getSelection(), "Y");
+        if (mGenerated.getSelectionIndex() > 0)
+        {
+            FilterConditionBean fc = new FilterConditionBean();
+            fc.setID("generated");
+            fc.setOption(TextSchemaComparator.EQUALS);
+            fc.setArgument(String.valueOf((mGenerated.getSelectionIndex() == 1)));
+            ors.add(fc);
+        }
+        Map<String,String> mdSettings = new HashMap<String, String>();
+        mSchemaController.getMetadata(mdSettings);
+        for (String extraID : mdSettings.keySet())
+        {
+            StarColumn col = StarColumnLogic.getColumn(extraID);
+            FilterConditionBean fc = new FilterConditionBean();
+            fc.setID(extraID);
+            fc.setOption(col.getComparator().getDefaultOption());
+            fc.setArgument(mdSettings.get(extraID));
+            ors.add(fc);
+        }
+        mFilter.setAnd(false);
         return mFilter;
+    }
+
+    public void addSpectraFilter(List<FilterConditionBean> ors, boolean selected, String spectra)
+    {
+        if (selected)
+        {
+            FilterConditionBean fc = new FilterConditionBean();
+            fc.setID("spectra");
+            fc.setOption(TextSchemaComparator.CONTAINS);
+            fc.setArgument(spectra);
+            ors.add(fc);
+        }
     }
 
     public void setFilter(StarFilter filter)
     {
         mFilter = filter;
-        mSpectraO.setSelection(mFilter.isSpectraO());
-        mSpectraB.setSelection(mFilter.isSpectraB());
-        mSpectraA.setSelection(mFilter.isSpectraA());
-        mSpectraF.setSelection(mFilter.isSpectraF());
-        mSpectraG.setSelection(mFilter.isSpectraG());
-        mSpectraK.setSelection(mFilter.isSpectraK());
-        mSpectraM.setSelection(mFilter.isSpectraM());
-        mSpectraL.setSelection(mFilter.isSpectraL());
-        mSpectraT.setSelection(mFilter.isSpectraT());
-        mSpectraY.setSelection(mFilter.isSpectraY());
-        if (mFilter.getGenerated() == null)
-            mGenerated.select(0);
-        else if (mFilter.getGenerated())
-            mGenerated.select(1);
-        else
-            mGenerated.select(2);
-        mSchemaController.setMetadata(mFilter.getExtraFields());
+        mSpectraO.setSelection(false);
+        mSpectraB.setSelection(false);
+        mSpectraA.setSelection(false);
+        mSpectraF.setSelection(false);
+        mSpectraG.setSelection(false);
+        mSpectraK.setSelection(false);
+        mSpectraM.setSelection(false);
+        mSpectraL.setSelection(false);
+        mSpectraT.setSelection(false);
+        mSpectraY.setSelection(false);
+        mGenerated.select(0);
+        Map<String,String> mdSettings = new HashMap<String, String>();
+        if (!mFilter.isAnd())
+        {
+            for (FilterConditionBean cond : mFilter.getConditions())
+            {
+                if ("spectra".equals(cond.getID()))
+                {
+                    if ("O".equals(cond.getArgument()))
+                        mSpectraO.setSelection(true);
+                    else if ("B".equals(cond.getArgument()))
+                        mSpectraB.setSelection(true);
+                    else if ("A".equals(cond.getArgument()))
+                        mSpectraA.setSelection(true);
+                    else if ("F".equals(cond.getArgument()))
+                        mSpectraF.setSelection(true);
+                    else if ("G".equals(cond.getArgument()))
+                        mSpectraG.setSelection(true);
+                    else if ("K".equals(cond.getArgument()))
+                        mSpectraK.setSelection(true);
+                    else if ("M".equals(cond.getArgument()))
+                        mSpectraM.setSelection(true);
+                    else if ("L".equals(cond.getArgument()))
+                        mSpectraL.setSelection(true);
+                    else if ("T".equals(cond.getArgument()))
+                        mSpectraT.setSelection(true);
+                    else if ("Y".equals(cond.getArgument()))
+                        mSpectraY.setSelection(true);
+                }
+                else if ("generated".equals(cond.getID()))
+                {
+                    if ("true".equals(cond.getArgument()))
+                        mGenerated.select(1);
+                    else
+                        mGenerated.select(2);
+                }
+                else
+                {
+                    StarColumn col = StarColumnLogic.getColumn(cond.getID());
+                    if ((cond.getOption() == col.getComparator().getDefaultOption()) && (cond.getArgument() instanceof String))
+                        mdSettings.put(cond.getID(), (String)cond.getArgument());
+                }
+            }
+        }
+        mSchemaController.setMetadata(mdSettings);
     }
 }
