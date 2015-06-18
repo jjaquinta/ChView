@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ChVIew
 Bundle-SymbolicName: jo.chview.app;singleton:=true
-Bundle-Version: 1.0.0.20150612
+Bundle-Version: 1.0.0.20150618
 Bundle-Activator: jo.chview.app.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

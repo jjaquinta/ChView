@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class BuildAndPackage
     public BuildAndPackage(String[] args)
     {
         mArgs = args;
-        mWorkspace = new File("C:\\Users\\IBM_ADMIN\\Documents\\ws\\jo");
+        mWorkspace = new File("C:\\Users\\IBM_ADMIN\\git\\ChView");
         mEclipseDirectory = new File("C:\\Program Files\\eclipseLunaRCP");
         mPlugins.add("jo.chview.util");
         mPlugins.add("jo.chview.util.core");
@@ -126,7 +127,7 @@ public class BuildAndPackage
             cmd += "\"put "+f.toString()+"\" ";
         cmd += "\"exit\"";;
         DebugUtils.info("  "+cmd);
-        exec(cmd);
+        exec(cmd, null);
     }
     
     private void createManifest() throws IOException
@@ -289,17 +290,18 @@ public class BuildAndPackage
         cmd += "-buildfile \""+mOrgEclipsePdeBuild.getAbsolutePath()+"\\scripts\\productBuild\\productBuild.xml\" ";
         cmd += "-Dbuilder=\""+mConfigurationDirectory.getAbsolutePath()+"\"";
         DebugUtils.info(cmd);
-        exec(cmd);
+        exec(cmd, new File(mBuildDirectory, "compile.log"));
     }
 
-    private void exec(String cmd) throws IOException
+    private void exec(String cmd, File log) throws IOException
     {
         Process p = Runtime.getRuntime().exec(cmd);
         final InputStream stdout = p.getInputStream();
         final InputStream stderr = p.getErrorStream();
-        Thread stdoutReader = new Thread() { public void run() { try { StreamUtils.copy(stdout, System.out); } catch (IOException e) { } } };
+        final OutputStream logout = (log == null) ? System.out : new FileOutputStream(log);
+        Thread stdoutReader = new Thread() { public void run() { try { StreamUtils.copy(stdout, logout); } catch (IOException e) { } } };
         stdoutReader.start();
-        Thread stderrReader = new Thread() { public void run() { try { StreamUtils.copy(stderr, System.out); } catch (IOException e) { } } };
+        Thread stderrReader = new Thread() { public void run() { try { StreamUtils.copy(stderr, logout); } catch (IOException e) { } } };
         stderrReader.start();
         int ec = -1;
         try
@@ -309,6 +311,10 @@ public class BuildAndPackage
         catch (InterruptedException e)
         {
         }
+        if (log != null)
+            logout.close();
+        else
+            logout.flush();
         DebugUtils.info("Exit Code: "+ec);
         if (ec != 0)
             System.exit(1);
