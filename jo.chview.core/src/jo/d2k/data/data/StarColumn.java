@@ -1,5 +1,8 @@
 package jo.d2k.data.data;
 
+import jo.d2k.data.logic.schema.ISchemaComparator;
+import jo.d2k.data.logic.schema.StarSchemaComparatorLogic;
+
 
 public class StarColumn
 {
@@ -12,6 +15,7 @@ public class StarColumn
     private String  mID;
     private int mSortBy;
     private int mWidth;
+    private ISchemaComparator mComparator;
     
     public StarColumn(int type, String id, String title)
     {
@@ -20,15 +24,17 @@ public class StarColumn
         mTitle = title;
         mWidth = 125;
         mSortBy = StarSchemaBean.SORT_BY_TEXT_INSENSITIVE;
+        mComparator = StarSchemaComparatorLogic.getComparator(StarSchemaBean.TEXT);
     }
     
-    public StarColumn(int type, String id, String title, int width, int sortBy)
+    public StarColumn(int type, String id, String title, int width, int sortBy, ISchemaComparator comp)
     {
         mType = type;
         mID = id;
         mTitle = title;
         mWidth = width;
         mSortBy = sortBy;
+        mComparator = comp;
     }
     
     @Override
@@ -80,5 +86,15 @@ public class StarColumn
     public void setWidth(int width)
     {
         mWidth = width;
+    }
+
+    public ISchemaComparator getComparator()
+    {
+        return mComparator;
+    }
+
+    public void setComparator(ISchemaComparator comparator)
+    {
+        mComparator = comparator;
     }
 }

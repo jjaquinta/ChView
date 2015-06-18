@@ -15,6 +15,9 @@ public class StarSchemaBean extends Bean
     public static final int CHOICE = 3;
     public static final int TAGS = 4;
     public static final int LINK = 5;
+    public static final int AND = 6;
+    public static final int OR = 7;
+    public static final int NOT = 8;
     
     public static final String[] LABELS = {
         "Text",
@@ -23,6 +26,9 @@ public class StarSchemaBean extends Bean
         "Choice",
         "Tags",
         "Link",
+        "And",
+        "Or",
+        "Not",
     };
     
     private String  mMetadataID;

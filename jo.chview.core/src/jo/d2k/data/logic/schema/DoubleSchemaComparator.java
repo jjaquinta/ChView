@@ -1,10 +1,8 @@
 package jo.d2k.data.logic.schema;
 
-import jo.d2k.data.data.StarBean;
-import jo.d2k.data.logic.StarLogic;
 import jo.util.utils.obj.DoubleUtils;
 
-public class DoubleSchemaComparator implements ISchemaComparator
+public class DoubleSchemaComparator extends SimpleSchemaComparator
 {
     private static final String[] OPTIONS = {
         "Less Than",
@@ -23,12 +21,6 @@ public class DoubleSchemaComparator implements ISchemaComparator
         true,
     };
 
-
-    @Override
-    public String getName()
-    {
-        return "Floating Point";
-    }
     @Override
     public String[] getOptions()
     {
@@ -42,9 +34,9 @@ public class DoubleSchemaComparator implements ISchemaComparator
     }
 
     @Override
-    public boolean isMatch(StarBean star, String id, int option, Object a)
+    public boolean isMatch(Object v, int option, Object a)
     {
-        double val = DoubleUtils.parseDouble(StarLogic.getMetadata(star).get(id).trim());
+        double val = DoubleUtils.parseDouble(v);
         double arg = DoubleUtils.parseDouble(a);
         switch (option)
         {

@@ -1,10 +1,8 @@
 package jo.d2k.data.logic.schema;
 
-import jo.d2k.data.data.StarBean;
-import jo.d2k.data.logic.StarLogic;
 import jo.util.utils.obj.StringUtils;
 
-public class TagsSchemaComparator implements ISchemaComparator
+public class TagsSchemaComparator extends SimpleSchemaComparator
 {
     private static final String[] OPTIONS = {
         "Contains",
@@ -21,12 +19,6 @@ public class TagsSchemaComparator implements ISchemaComparator
         false,
     };
 
-
-    @Override
-    public String getName()
-    {
-        return "Tags";
-    }
     @Override
     public String[] getOptions()
     {
@@ -40,9 +32,9 @@ public class TagsSchemaComparator implements ISchemaComparator
     }
 
     @Override
-    public boolean isMatch(StarBean star, String id, int option, Object a)
+    public boolean isMatch(Object v, int option, Object a)
     {
-        String val = " "+StarLogic.getMetadata(star).get(id).toLowerCase()+" ";
+        String val = " "+v.toString().toLowerCase()+" ";
         String arg = " "+a.toString().trim().toLowerCase()+" ";
         switch (option)
         {

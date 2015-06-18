@@ -11,6 +11,7 @@ import jo.d2k.data.data.ChViewContextBean;
 import jo.d2k.data.data.StarBean;
 import jo.d2k.data.data.StarColumn;
 import jo.d2k.data.data.StarSchemaBean;
+import jo.d2k.data.logic.schema.StarSchemaComparatorLogic;
 import jo.util.beans.PropChangeSupport;
 import jo.util.utils.BeanUtils;
 import jo.util.utils.FormatUtils;
@@ -48,23 +49,33 @@ public class StarColumnLogic
         mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, ChViewContextBean.TWOMASS_NAME, "2MASS Name"));
         mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "quadrant", "Quadrant"));
         mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "x,y,z", "Coords"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "x", "X", 50, StarSchemaBean.SORT_BY_NUMBER));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "y", "Y", 50, StarSchemaBean.SORT_BY_NUMBER));
-        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "z", "Z", 50, StarSchemaBean.SORT_BY_NUMBER));
+        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "x", "X", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "y", "Y", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "z", "Z", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
         mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "spectra", "Spectrum"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "apparentMagnitude", "App Mag", 50, StarSchemaBean.SORT_BY_NUMBER));
+        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "apparentMagnitude", "App Mag", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
         mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "parent", "Parent"));
         mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "simbadURL", "Simbad"));
         mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "wikipediaURL", "Wikipedia"));
         mColumns.add(new StarColumn(StarColumn.TYPE_INTRINSIC, "generated", "Generated"));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "ra", "RA", 100, StarSchemaBean.SORT_BY_NUMBER));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dec", "Dec", 100, StarSchemaBean.SORT_BY_NUMBER));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "plx", "Plx", 50, StarSchemaBean.SORT_BY_NUMBER));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dist", "Dist", 50, StarSchemaBean.SORT_BY_NUMBER));
-        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "absoluteMagnitude", "Abs Mag", 50, StarSchemaBean.SORT_BY_NUMBER));
+        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "ra", "RA", 100, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dec", "Dec", 100, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "plx", "Plx", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dist", "Dist", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
+        mColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "absoluteMagnitude", "Abs Mag", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
         for (StarSchemaBean schema : StarSchemaLogic.getSchemas())
             mColumns.add(new StarColumn(StarColumn.TYPE_EXTRA, schema.getMetadataID(), schema.getTitle(),
-                    schema.getWidth(), schema.getSortBy()));
+                    schema.getWidth(), schema.getSortBy(),
+                    StarSchemaComparatorLogic.getComparator(schema.getType())));
         return mColumns;
     }
     
@@ -99,15 +110,43 @@ public class StarColumnLogic
 
     public static String getText(ChViewContextBean context, StarBean star, StarColumn col)
     {
-        if (col.getType() == StarColumn.TYPE_INTRINSIC)
+        Object val = getValue(context, star, col);
+        if (val instanceof String)
+            return (String)val;
+        else if (val instanceof Double)
         {
-            Object val = BeanUtils.get(star, col.getID());
-            if (val == null)
-                return "";
-            if (val instanceof Double)
+            if (col.getType() == StarColumn.TYPE_INTRINSIC)
                 return FormatUtils.formatDouble((Double)val, 2);
-            return val.toString();
+            else if (col.getType() == StarColumn.TYPE_CALCULATED)
+            {
+                String id = col.getID();
+                if (id.equals("dist"))
+                    return FormatUtils.formatDouble((Double)val, 1);
+                if (id.equals("ra"))
+                    return FormatUtils.formatHMS((Double)val);
+                if (id.equals("dec"))
+                    return FormatUtils.formatDMS((Double)val);
+                if (id.equals("plx"))
+                    return FormatUtils.formatDouble((Double)val, 1);
+                if (id.equals("apparentMagnitude"))
+                    return FormatUtils.formatDouble((Double)val, 2);
+                if (id.equals("absoluteMagnitude"))
+                    return FormatUtils.formatDouble((Double)val, 2);
+            }
+            return FormatUtils.formatDouble((Double)val, 2);
         }
+        else if (val instanceof StarBean)
+            return ChViewFormatLogic.getStarName(context, (StarBean)val);
+        else if (val == null)
+            return "";
+        else
+            return val.toString();
+    }
+
+    public static Object getValue(ChViewContextBean context, StarBean star, StarColumn col)
+    {
+        if (col.getType() == StarColumn.TYPE_INTRINSIC)
+            return BeanUtils.get(star, col.getID());
         else if (col.getType() == StarColumn.TYPE_CALCULATED)
         {
             String id = col.getID();
@@ -116,18 +155,9 @@ public class StarColumnLogic
                     FormatUtils.formatDouble(star.getY(), 1)+","+
                     FormatUtils.formatDouble(star.getZ(), 1);
             if (id.equals("parent"))
-            {
-                StarBean parent = StarLogic.getByQuadrantID(star.getQuadrant(), star.getParent());
-                if (parent != null)
-                    return ChViewFormatLogic.getStarName(context, parent);
-                else
-                    return "";
-            }
+                return star.getParentRef();
             if (id.equals("dist"))
-            {
-                double d = StarExtraLogic.distance(star, 0, 0, 0);
-                return FormatUtils.formatDouble(d, 1);
-            }
+                return StarExtraLogic.distance(star, 0, 0, 0);
             if (id.equals("ra"))
             {
                 //double d = StarExtraLogic.distance(star, 0, 0, 0);
@@ -138,14 +168,14 @@ public class StarColumnLogic
                 double ra = 12*q/Math.PI;
                 if (ra < 0)
                     ra += 24;
-                return FormatUtils.formatHMS(ra);
+                return ra;
             }
             if (id.equals("dec"))
             {
                 double d = StarExtraLogic.distance(star, 0, 0, 0);
                 double f = Math.acos(star.getZ()/d);
                 double dec = 90 - (180*f/Math.PI);
-                return FormatUtils.formatDMS(dec);
+                return dec;
             }
             if (id.equals("plx"))
             {
@@ -155,17 +185,17 @@ public class StarColumnLogic
                     plx = 1/(d/3.26);
                 else
                     return "n/a";
-                return FormatUtils.formatDouble(plx*1000, 1);
+                return plx*1000;
             }
             if (id.equals("apparentMagnitude"))
             {
                 double d = StarExtraLogic.distance(star, 0, 0, 0);
                 double mag = star.getAbsMag() - 5 + 5*Math.log(d);
-                return FormatUtils.formatDouble(mag, 2);
+                return mag;
             }
             if (id.equals("absoluteMagnitude"))
             {
-                return FormatUtils.formatDouble(star.getAbsMag(), 2);
+                return star.getAbsMag();
             }
             throw new IllegalArgumentException("Not implemented, calculated column '"+col.getID()+"'");
         }

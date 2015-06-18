@@ -1,10 +1,8 @@
 package jo.d2k.data.logic.schema;
 
-import jo.d2k.data.data.StarBean;
-import jo.d2k.data.logic.StarLogic;
 import jo.util.utils.obj.StringUtils;
 
-public class ChoiceSchemaComparator implements ISchemaComparator
+public class ChoiceSchemaComparator extends SimpleSchemaComparator
 {
     private static final String[] OPTIONS = {
         "Equals",
@@ -20,12 +18,6 @@ public class ChoiceSchemaComparator implements ISchemaComparator
     };
     
     @Override
-    public String getName()
-    {
-        return "Choice";
-    }
-
-    @Override
     public String[] getOptions()
     {
         return OPTIONS;
@@ -38,9 +30,9 @@ public class ChoiceSchemaComparator implements ISchemaComparator
     }
 
     @Override
-    public boolean isMatch(StarBean star, String id, int option, Object arg)
+    public boolean isMatch(Object v, int option, Object arg)
     {
-        String val = StarLogic.getMetadata(star).get(id);
+        String val = (String)v;
         switch (option)
         {
             case 0: // equals

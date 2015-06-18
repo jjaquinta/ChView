@@ -4,11 +4,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import jo.d2k.admin.rcp.sys.ui.schema.AndSchemaController;
 import jo.d2k.admin.rcp.sys.ui.schema.ChoiceSchemaController;
 import jo.d2k.admin.rcp.sys.ui.schema.DoubleSchemaController;
 import jo.d2k.admin.rcp.sys.ui.schema.ISchemaController;
 import jo.d2k.admin.rcp.sys.ui.schema.IntegerSchemaController;
 import jo.d2k.admin.rcp.sys.ui.schema.LinkSchemaController;
+import jo.d2k.admin.rcp.sys.ui.schema.NotSchemaController;
+import jo.d2k.admin.rcp.sys.ui.schema.OrSchemaController;
 import jo.d2k.admin.rcp.sys.ui.schema.TagsSchemaController;
 import jo.d2k.admin.rcp.sys.ui.schema.TextSchemaController;
 import jo.d2k.data.data.StarSchemaBean;
@@ -16,6 +19,7 @@ import jo.d2k.data.data.StarSchemaBean;
 public class StarSchemaControllerLogic
 {
     private static final Map<Integer,ISchemaController> mSchemaControllers = new HashMap<Integer, ISchemaController>();
+    private static Integer[] mSchemaTypes;
     static
     {
         mSchemaControllers.put(StarSchemaBean.TEXT, new TextSchemaController());
@@ -24,6 +28,11 @@ public class StarSchemaControllerLogic
         mSchemaControllers.put(StarSchemaBean.CHOICE, new ChoiceSchemaController());
         mSchemaControllers.put(StarSchemaBean.TAGS, new TagsSchemaController());
         mSchemaControllers.put(StarSchemaBean.LINK, new LinkSchemaController());
+        mSchemaTypes = mSchemaControllers.keySet().toArray(new Integer[0]);
+        Arrays.sort(mSchemaTypes);
+        mSchemaControllers.put(StarSchemaBean.AND, new AndSchemaController());
+        mSchemaControllers.put(StarSchemaBean.OR, new OrSchemaController());
+        mSchemaControllers.put(StarSchemaBean.NOT, new NotSchemaController());
     }
 
     public static ISchemaController getController(StarSchemaBean schema)
@@ -38,9 +47,7 @@ public class StarSchemaControllerLogic
     
     public static Integer[] getSchemaTypes()
     {
-        Integer[] types = mSchemaControllers.keySet().toArray(new Integer[0]);
-        Arrays.sort(types);
-        return types;
+        return mSchemaTypes;
     }
     
     public static String[] getSchemaTypeLabels()

@@ -2,19 +2,10 @@ package jo.d2k.data.data;
 
 public class FilterConditionBean
 {
-    private int mType;
     private String  mID;
     private int mOption;
     private Object  mArgument;
     
-    public int getType()
-    {
-        return mType;
-    }
-    public void setType(int type)
-    {
-        mType = type;
-    }
     public String getID()
     {
         return mID;
