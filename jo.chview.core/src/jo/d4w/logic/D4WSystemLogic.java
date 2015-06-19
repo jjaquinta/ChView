@@ -131,7 +131,7 @@ public class D4WSystemLogic
         if ((idx < 0) || (idx > 9))
             idx = rnd.nextInt(10);
         norm += (char)(idx + '0');
-        int c = StarExtraLogic.getClass(spectra);
+        int c = StarExtraLogic.getClassOff(spectra);
         if (c == 0)
             norm += StarGenLogic.makeClass(s, rnd);
         else

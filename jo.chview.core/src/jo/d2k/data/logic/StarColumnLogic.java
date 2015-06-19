@@ -13,6 +13,7 @@ import jo.d2k.data.data.ChViewContextBean;
 import jo.d2k.data.data.StarBean;
 import jo.d2k.data.data.StarColumn;
 import jo.d2k.data.data.StarSchemaBean;
+import jo.d2k.data.logic.report.UtilLogic;
 import jo.d2k.data.logic.schema.StarSchemaComparatorLogic;
 import jo.util.beans.PropChangeSupport;
 import jo.util.utils.BeanUtils;
@@ -78,6 +79,8 @@ public class StarColumnLogic
         mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "dist", "Dist", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
         mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "absoluteMagnitude", "Abs Mag", 50, StarSchemaBean.SORT_BY_NUMBER,
+                StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
+        mAllColumns.add(new StarColumn(StarColumn.TYPE_CALCULATED, "mass", "Mass", 50, StarSchemaBean.SORT_BY_NUMBER,
                 StarSchemaComparatorLogic.getComparator(StarSchemaBean.DOUBLE)));
         for (StarSchemaBean schema : StarSchemaLogic.getSchemas())
             mAllColumns.add(new StarColumn(StarColumn.TYPE_EXTRA, schema.getMetadataID(), schema.getTitle(),
@@ -158,6 +161,8 @@ public class StarColumnLogic
                     return FormatUtils.formatDouble((Double)val, 2);
                 if (id.equals("absoluteMagnitude"))
                     return FormatUtils.formatDouble((Double)val, 2);
+                if (id.equals("mass"))
+                    return UtilLogic.format((Double)val);
             }
             return FormatUtils.formatDouble((Double)val, 2);
         }
@@ -222,6 +227,10 @@ public class StarColumnLogic
             if (id.equals("absoluteMagnitude"))
             {
                 return star.getAbsMag();
+            }
+            if (id.equals("mass"))
+            {
+                return StarExtraLogic.calcMassFromTypeAndClass(star.getSpectra());
             }
             throw new IllegalArgumentException("Not implemented, calculated column '"+col.getID()+"'");
         }

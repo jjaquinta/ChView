@@ -41,7 +41,7 @@ public class ChViewFormatLogic
 
     public static int getStarRadius(ChViewContextBean context, StarBean star)
     {
-        int s = StarExtraLogic.getClass(star);
+        int s = StarExtraLogic.getClassOff(star.getSpectra());
         switch (s)
         {
             case 0:
