@@ -1,17 +1,9 @@
 package chuck.terran.admin;
 
-import java.util.List;
-import java.util.Map;
-
-import jo.d2k.data.logic.DataLogic;
 import jo.util.logic.ThreadLogic;
 import jo.util.logic.UIThreadHandler;
-import jo.util.ui.utils.ColorUtils;
-import jo.util.ui.utils.FontUtils;
 import jo.util.utils.DebugUtils;
-import jo.util.utils.ExtensionPointUtils;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -46,27 +38,6 @@ public class Activator extends AbstractUIPlugin {
         DebugUtils.mLoggers.clear();
         DebugUtils.mLoggers.add(new EclipseLogger());
         ThreadLogic.setUIThreadHandler(new UIThreadHandler());
-        loadDataSources();
-        ColorUtils.init();
-        FontUtils.init();
-    }
-    
-    private static final String[] DATASOURCE_TEXT = { "name", "type", "uri", "readOnly", "default" };
-    
-    private void loadDataSources()
-    {
-        DataLogic.setDBRoot(Platform.getLocation().toFile());
-        List<Map<String,Object>> map = ExtensionPointUtils.getExecutableExtensionInfo("jo.chview.rcp.datasource", DATASOURCE_TEXT, null);
-        for (int i = 0; i < map.size(); i++)
-        {
-            Map<String,Object> dsMap = map.get(i);
-            String name = (String)dsMap.get(DATASOURCE_TEXT[0]);
-            String type = (String)dsMap.get(DATASOURCE_TEXT[1]);
-            String uri = (String)dsMap.get(DATASOURCE_TEXT[2]);
-            String readOnly = (String)dsMap.get(DATASOURCE_TEXT[3]);
-            String def = (String)dsMap.get(DATASOURCE_TEXT[4]);
-            DataLogic.addDataSource(name, type, uri, readOnly, def);
-        }
     }
 
 	/*
