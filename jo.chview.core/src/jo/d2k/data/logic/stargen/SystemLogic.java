@@ -22,7 +22,7 @@ public class SystemLogic
 {
     private static WeakCache<StarBean, SunBean> mSystemCache = new WeakCache<StarBean, SunBean>();
     
-    public static SunBean generateSystem(StarBean star, StarBean companion)
+    public static SunBean generateSystem(StarBean star)
     {
         SunBean sun = mSystemCache.get(star);
         if (sun != null)
@@ -33,7 +33,8 @@ public class SystemLogic
         system.setRndSeed(seed);
         system.setSun(new SunBean());
         system.getSun().setStar(star);
-        system.getSun().setCompanion(companion);
+        if (star.getChildren().size() > 0)
+            system.getSun().setCompanion(star.getChildren().get(0));
         system.setUseSeedSystem(false);
         system.setSysNo(1);
         system.setSystemName(star.getName());
@@ -44,8 +45,9 @@ public class SystemLogic
         system.getSun().setMass(StarExtraLogic.calcMassFromTypeAndClass(spectra));
         system.getSun().setLuminosity(StarExtraLogic.calcLuminosityFromTypeAndClass(spectra));
         system.getSun().setRadius(StarExtraLogic.calcRadiusFromTypeAndClass(spectra));
-        if (companion != null)
+        if (star.getChildren().size() > 0)
         {
+            StarBean companion = star.getChildren().get(0);
             /*
              * The following is Holman & Wiegert's equation 1 from
              * Long-Term Stability of Planets in Binary Systems The
@@ -171,16 +173,9 @@ public class SystemLogic
             String primaryURI = "star://"+u.getUserInfo()+"@"+u.getHost();
             StarBean primary = StarLogic.getByURI(primaryURI);
             StringTokenizer path = new StringTokenizer(u.getPath(), "/");
-            StarBean companion = null;
             String seg = path.nextToken();
-            if (seg.indexOf('@') >= 0)
-            {
-                String secondaryURI = "star://"+seg;
-                companion = StarLogic.getByURI(secondaryURI);
-                seg = path.nextToken();
-            }
             long oid = LongUtils.parseLong(seg);
-            SunBean system = generateSystem(primary, companion);
+            SunBean system = generateSystem(primary);
             BodyBean body = findByOID(system, oid);
             return body;
         }
