@@ -204,7 +204,7 @@ public class SimpleFilterPanel extends Composite
 
     public void addUIPropertyChangeListener(PropertyChangeListener pcl)
     {
-        mPCS.addPropertyChangeListener(pcl);
+        mPCS.addUIPropertyChangeListener(pcl);
     }
 
     public void addUIPropertyChangeListener(String prop, PropertyChangeListener pcl)

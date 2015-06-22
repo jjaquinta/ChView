@@ -96,7 +96,7 @@ public class BinaryReport
             text.append("<tr><td>");
             text.append(ChViewFormatLogic.getStarName(params, star));
             text.append("</td><td align=\"right\"><pre>");
-            text.append(UtilLogic.format(center.dist(loc)));
+            text.append(UtilLogic.format(center.dist(loc), 1, 3));
             text.append("</pre></td><td align=\"right\"><pre>");
             text.append(UtilLogic.format(StarExtraLogic.calcMassFromTypeAndClass(star.getSpectra())));
             text.append("</pre></td><td>");
