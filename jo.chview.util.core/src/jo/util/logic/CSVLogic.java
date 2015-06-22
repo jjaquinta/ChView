@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import jo.util.intro.PseudoProp;
 import jo.util.utils.DebugUtils;
 
 public class CSVLogic
@@ -260,6 +262,9 @@ public class CSVLogic
         {
             if (columns[i] == null)
                 continue;
+            Method m = columns[i].getWriteMethod();
+            if (m.getAnnotation(PseudoProp.class) != null)
+                continue;
             Class<?> valClass = columns[i].getReadMethod().getReturnType();
             String valName = valClass.getName();
             Object[] val = new Object[1];
@@ -280,9 +285,9 @@ public class CSVLogic
             else if ((valClass == Character.class) || valName.equals("char"))
                 val[0] = new Character(vals[i].charAt(0));
             else
-                throw new IllegalArgumentException("Cannot handle class '"+valClass+"'");
+                throw new IllegalArgumentException("Cannot handle class '"+valClass+"' on member "+columns[i].getName());
             //DebugUtils.trace("Invoking "+columns[i].getWriteMethod()+" on "+ret.getClass().getName()+" with "+val[0].getClass().getName());
-            columns[i].getWriteMethod().invoke(ret, val);
+            m.invoke(ret, val);
         }
         return ret;
     }
