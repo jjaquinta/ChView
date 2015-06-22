@@ -54,15 +54,15 @@ public class SystemPanel extends Composite
     public void doGetSecondaryData()
     {
         mSystem.clear();
-        StarBean primary = mStar.getPrimary();
-        List<StarBean> stars = primary.getChildren();
-        if (stars.size() > 0)
-            mSystem.add(SystemLogic.generateSystem(primary, stars.get(0)));
-        else
-            mSystem.add(SystemLogic.generateSystem(primary, null));
-        for (StarBean secondary : stars)
-            mSystem.add(SystemLogic.generateSystem(secondary, primary));
+        addSystems(mStar.getPrimary());
         ThreadLogic.runMethodOnUIThread(this, "doDisplaySecondaryData");
+    }
+
+    private void addSystems(StarBean star)
+    {
+        mSystem.add(SystemLogic.generateSystem(star));
+        for (StarBean child : star.getChildren())
+            addSystems(child);
     }
     
     public void doDisplaySecondaryData()

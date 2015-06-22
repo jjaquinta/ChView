@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 
 import jo.chview.web.logic.StarRequestLogic;
 import jo.chview.web.logic.StarsRequestLogic;
+import jo.chview.web.logic.SystemRequestLogic;
 import jo.d2k.data.logic.DataLogic;
 
 /**
@@ -59,6 +60,8 @@ public class ChViewServlet extends BaseServlet {
             StarsRequestLogic.doStarsRequest(this, path[0]);
         else if (path.length == 2)
             StarRequestLogic.doStarRequest(this, path[0], Long.parseLong(path[1]));
+        else if (path.length == 3)
+            SystemRequestLogic.doSystemRequest(this, path[0], Long.parseLong(path[1]), Long.parseLong(path[2]));
         else
             respondError("Unknown request '"+pathInfo);
     }
