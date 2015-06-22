@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import jo.d2k.data.logic.DataLogic;
 import jo.d2k.data.logic.RuntimeLogic;
+import jo.util.logic.ThreadLogic;
 import jo.util.ui.act.GenericAction;
 import jo.util.utils.ProgMonWrapper;
 
@@ -37,7 +38,7 @@ public class HandlerExport extends AbstractHandler
         try
         {
             RuntimeLogic.incrementBusy();
-            progressDialog.run(false, true, new IRunnableWithProgress() {
+            progressDialog.run(true, true, new IRunnableWithProgress() {
                 @Override
                 public void run(IProgressMonitor pm) throws InvocationTargetException,
                         InterruptedException
@@ -46,9 +47,10 @@ public class HandlerExport extends AbstractHandler
                     {
                         report.append(DataLogic.exportData(new File(zipFile), new ProgMonWrapper(pm)));
                     }
-                    catch (Exception e)
+                    catch (final Exception e)
                     {
-                        GenericAction.openError("Export", "Error while exporting data", e);
+                        Thread t = new Thread() { public void run() { GenericAction.openError("Export", "Error while exporting data", e); }};
+                        ThreadLogic.runOnUIThread(t);
                         e.printStackTrace();
                     }
                 }

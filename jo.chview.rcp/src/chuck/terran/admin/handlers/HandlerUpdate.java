@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.List;
 
+import jo.util.logic.ThreadLogic;
 import jo.util.ui.act.GenericAction;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -43,7 +44,7 @@ public class HandlerUpdate extends AbstractHandler
         final boolean[] success = new boolean[] { false };
         ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(window);  
         try {  
-            progressDialog.run(false, true, new IRunnableWithProgress() {
+            progressDialog.run(true, true, new IRunnableWithProgress() {
                 @Override
                 public void run(IProgressMonitor pm) throws InvocationTargetException,
                         InterruptedException
@@ -52,9 +53,10 @@ public class HandlerUpdate extends AbstractHandler
                     {
                         success[0] = UpdateLogic.performUpdates(updates);
                     }
-                    catch (Exception e)
+                    catch (final Exception e)
                     {
-                        GenericAction.openError(window, "Update", "Error while updating", e);
+                        Thread t = new Thread() { public void run() { GenericAction.openError("Update", "Error while updating", e); }};
+                        ThreadLogic.runOnUIThread(t);
                         e.printStackTrace();
                     }
                 }

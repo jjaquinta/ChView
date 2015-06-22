@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import jo.d2k.data.logic.imp.ImportLogic;
+import jo.util.logic.ThreadLogic;
 import jo.util.ui.act.GenericAction;
 import jo.util.utils.io.FileUtils;
 
@@ -28,7 +29,7 @@ public class HandlerReportMerge extends AbstractHandler
         final StringBuffer html = new StringBuffer();
         ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(Display.getDefault().getActiveShell());  
         try {  
-            progressDialog.run(false, true, new IRunnableWithProgress() {
+            progressDialog.run(true, true, new IRunnableWithProgress() {
                 @Override
                 public void run(IProgressMonitor pm) throws InvocationTargetException,
                         InterruptedException
@@ -39,9 +40,10 @@ public class HandlerReportMerge extends AbstractHandler
                         ImportLogic.importFile(new File(dataFile), cb);
                         html.append(cb.toHTML());
                     }
-                    catch (Exception e)
+                    catch (final Exception e)
                     {
-                        GenericAction.openError("Merge Report", "Error while reading import data", e);
+                        Thread t = new Thread() { public void run() { GenericAction.openError("Merge Report", "Error while reading import data", e); }};
+                        ThreadLogic.runOnUIThread(t);
                         e.printStackTrace();
                     }
                 }

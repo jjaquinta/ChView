@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import jo.d2k.data.logic.DataLogic;
+import jo.util.logic.ThreadLogic;
 import jo.util.ui.act.GenericAction;
 import jo.util.utils.ProgMonWrapper;
 
@@ -39,7 +40,7 @@ public class HandlerImport extends HandlerBaseReadOnly
         final StringBuffer report = new StringBuffer();
         ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(Display.getDefault().getActiveShell());  
         try {  
-            progressDialog.run(false, true, new IRunnableWithProgress() {
+            progressDialog.run(true, true, new IRunnableWithProgress() {
                 @Override
                 public void run(IProgressMonitor pm) throws InvocationTargetException,
                         InterruptedException
@@ -48,9 +49,10 @@ public class HandlerImport extends HandlerBaseReadOnly
                     {
                         report.append(DataLogic.importData(new File(dataFile), merge, new ProgMonWrapper(pm)));
                     }
-                    catch (Exception e)
+                    catch (final Exception e)
                     {
-                        GenericAction.openError("Import", "Error while importing data", e);
+                        Thread t = new Thread() { public void run() { GenericAction.openError("Import", "Error while importing data", e); }};
+                        ThreadLogic.runOnUIThread(t);
                         e.printStackTrace();
                     }
                 }
