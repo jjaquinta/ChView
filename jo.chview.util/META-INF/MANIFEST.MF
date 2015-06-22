@@ -2,12 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Util
 Bundle-SymbolicName: jo.chview.util;singleton:=true
-Bundle-Version: 1.0.0.20150619
+Bundle-Version: 1.0.0.20150622
 Bundle-Activator: jo.chview.util.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  jo.chview.util.core
 Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: jo.chview.util,
  jo.util.beans,
  jo.util.logic,
@@ -17,6 +18,5 @@ Export-Package: jo.chview.util,
  jo.util.ui.utils,
  jo.util.ui.viewers,
  jo.util.utils
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.ui.forms.widgets
 Bundle-ClassPath: src/

@@ -54,10 +54,10 @@ public class BuildAndPackage
         mArgs = args;
         mWorkspace = new File("C:\\Users\\IBM_ADMIN\\git\\ChView");
         mEclipseDirectory = new File("C:\\Program Files\\eclipseLunaRCP");
-        mPlugins.add("jo.chview.util");
         mPlugins.add("jo.chview.util.core");
         mPlugins.add("jo.chview.core");
         mPlugins.add("jo.chview.rcp");
+        mPlugins.add("jo.chview.util");
         mBuildDirectory = new File("c:\\temp\\chuck_build");
         mConfigurationDirectory = new File("c:\\temp\\chuck_config");
         mPathToProduct = "/chuck.terran.admin/chuck.terran.admin.product";
@@ -174,7 +174,7 @@ public class BuildAndPackage
         for (String plugin : mPlugins)
         {
             for (File jar : pluginJars)
-                if (jar.getName().startsWith(plugin+"_"))
+                if (jar.getName().startsWith(plugin+"_") && jar.getName().endsWith(".jar"))
                 {
                     mFilesToCopy.add(jar);
                     break;

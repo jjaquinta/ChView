@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Admin
 Bundle-SymbolicName: chuck.terran.admin;singleton:=true
-Bundle-Version: 1.0.0.20150619
+Bundle-Version: 1.0.0.20150622
 Bundle-Activator: chuck.terran.admin.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

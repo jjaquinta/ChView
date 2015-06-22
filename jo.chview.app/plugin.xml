@@ -39,7 +39,7 @@
          </property>
          <property
                name="aboutText"
-               value="Copyright 1997, 2015 by Jo Grant and Ben Lin.  All Rights Reserved.  ChView (including all program, data, and documentation files) is the sole property of Jo Grant and Ben Lin and must not be copied or reproduced in any form without permission from one of the copyright owners, except for personal use. Version 1.0.0.20150619">
+               value="Copyright 1997, 2015 by Jo Grant and Ben Lin.  All Rights Reserved.  ChView (including all program, data, and documentation files) is the sole property of Jo Grant and Ben Lin and must not be copied or reproduced in any form without permission from one of the copyright owners, except for personal use. Version 1.0.0.20150622">
          </property>
       </product>
    </extension>

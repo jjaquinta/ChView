@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Core
 Bundle-SymbolicName: jo.chview.util.core
-Bundle-Version: 1.0.0.20150619
+Bundle-Version: 1.0.0.20150622
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: jo.util.astar,
  jo.util.beans,
