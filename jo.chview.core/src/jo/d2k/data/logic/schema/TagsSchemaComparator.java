@@ -57,6 +57,14 @@ public class TagsSchemaComparator extends SimpleSchemaComparator
     }
 
     @Override
+    public Object isValidArgFor(int option, Object arg)
+    {
+        if (arg != null)
+            arg = arg.toString();
+        return arg;
+    }
+    
+    @Override
     public int getDefaultOption()
     {
         return 0;

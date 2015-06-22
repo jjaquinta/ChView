@@ -44,4 +44,17 @@ public class LinkSchemaComparator extends SimpleSchemaComparator
     {
         return 1;
     }
+
+    @Override
+    public Object isValidArgFor(int option, Object arg)
+    {
+        if (arg != null)
+        {
+            String link = arg.toString();
+            if (link.indexOf("://") < 0)
+                link = "http://"+link;
+            arg = link;
+        }
+        return arg;
+    }
 }

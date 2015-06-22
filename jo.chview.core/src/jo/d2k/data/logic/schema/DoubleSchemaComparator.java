@@ -61,4 +61,10 @@ public class DoubleSchemaComparator extends SimpleSchemaComparator
     {
         return 2;
     }
+
+    @Override
+    public Object isValidArgFor(int option, Object arg)
+    {
+        return DoubleUtils.parseDouble(arg);
+    }
 }

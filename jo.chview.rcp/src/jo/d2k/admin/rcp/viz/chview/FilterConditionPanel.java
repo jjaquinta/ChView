@@ -1,5 +1,6 @@
 package jo.d2k.admin.rcp.viz.chview;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ import jo.d2k.data.data.StarSchemaBean;
 import jo.d2k.data.logic.StarColumnLogic;
 import jo.d2k.data.logic.StarSchemaLogic;
 import jo.d2k.data.logic.schema.StarSchemaComparatorLogic;
+import jo.util.beans.PropChangeSupport;
 import jo.util.ui.ctrl.ComboUtils;
 import jo.util.ui.utils.ControlUtils;
 import jo.util.ui.utils.GridUtils;
@@ -25,16 +27,20 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
 
 public class FilterConditionPanel extends Composite
 {
     private FilterConditionBean mCondition;
+    private PropChangeSupport mPCS;
     
     private ComboViewer   mColumn;
     private Combo   mOption;
@@ -43,6 +49,7 @@ public class FilterConditionPanel extends Composite
     public FilterConditionPanel(Composite parent, int style)
     {
         super(parent, style);
+        mPCS = new PropChangeSupport(this);
         setLayout(new GridLayout(2, false));
         GridUtils.makeLabel(this, "Column:", "");
         mColumn = new ComboViewer(this);
@@ -111,9 +118,44 @@ public class FilterConditionPanel extends Composite
             mArgs.setData("ctrl", ctrl);
             mArgs.setData("schema", schema);
             mArgs.layout();
+            if (ctrl instanceof Text)
+                ((Text)ctrl).addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e)
+                    {
+                        updateValidity();
+                    }
+                });
+            else if (ctrl instanceof Combo)
+                ((Combo)ctrl).addSelectionListener(new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected(SelectionEvent e)
+                    {
+                        updateValidity();
+                    }
+                });
         }
+        updateValidity();
     }
 
+    public boolean isValid()
+    {
+        IStructuredSelection colSel = (IStructuredSelection)mColumn.getSelection();
+        StarColumn col = (StarColumn)colSel.getFirstElement();    
+        if (col == null)
+            return false;
+        if (!col.getComparator().isArgFor(mOption.getSelectionIndex()))
+            return true;
+        ISchemaController controller = (ISchemaController)mArgs.getData("controller");
+        Control ctrl = (Control)mArgs.getData("ctrl");
+        StarSchemaBean schema = (StarSchemaBean)mArgs.getData("schema");
+        Map<String, String> metadata = new HashMap<String, String>();
+        controller.storeToMetadata(ctrl, schema, metadata);
+        Object arg = metadata.get(schema.getMetadataID());
+        arg = col.getComparator().isValidArgFor(mOption.getSelectionIndex(), arg);
+        return arg != null;
+    }
+    
     public FilterConditionBean getCondition()
     {
         if (mCondition == null)
@@ -129,7 +171,9 @@ public class FilterConditionPanel extends Composite
             StarSchemaBean schema = (StarSchemaBean)mArgs.getData("schema");
             Map<String, String> metadata = new HashMap<String, String>();
             controller.storeToMetadata(ctrl, schema, metadata);
-            mCondition.setArgument(metadata.get(schema.getMetadataID()));
+            Object arg = metadata.get(schema.getMetadataID());
+            arg = col.getComparator().isValidArgFor(mCondition.getOption(), arg);
+            mCondition.setArgument(arg);
         }
         else if (col.getType() == StarColumn.TYPE_PSEUDO)
             mCondition.setArgument(new ArrayList<FilterConditionBean>());
@@ -144,6 +188,31 @@ public class FilterConditionPanel extends Composite
             mColumn.setSelection(new StructuredSelection(StarColumnLogic.getColumn(mCondition.getID())));
             mOption.select(mCondition.getOption());
         }
+        updateValidity();
     }
 
+    private void updateValidity()
+    {
+        mPCS.fireMonotonicPropertyChange("valid", isValid());
+    }
+    
+    public void addPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.addPropertyChangeListener(pcl);
+    }
+
+    public void addPropertyChangeListener(String prop, PropertyChangeListener pcl)
+    {
+        mPCS.addPropertyChangeListener(prop, pcl);
+    }
+
+    public void addUIPropertyChangeListener(String prop, PropertyChangeListener pcl)
+    {
+        mPCS.addUIPropertyChangeListener(prop, pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.removePropertyChangeListener(pcl);
+    }
 }

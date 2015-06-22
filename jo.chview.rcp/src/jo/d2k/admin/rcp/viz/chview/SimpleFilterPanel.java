@@ -1,5 +1,6 @@
 package jo.d2k.admin.rcp.viz.chview;
 
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,12 @@ import jo.d2k.data.data.StarColumn;
 import jo.d2k.data.data.StarFilter;
 import jo.d2k.data.logic.StarColumnLogic;
 import jo.d2k.data.logic.schema.TextSchemaComparator;
+import jo.util.beans.PropChangeSupport;
 import jo.util.ui.utils.GridUtils;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -21,6 +25,7 @@ import org.eclipse.swt.widgets.Composite;
 public class SimpleFilterPanel extends Composite
 {
     private StarFilter  mFilter;
+    private PropChangeSupport mPCS;
     
     private Button mSpectraO;
     private Button mSpectraB;
@@ -38,6 +43,7 @@ public class SimpleFilterPanel extends Composite
     public SimpleFilterPanel(Composite parent, int style)
     {
         super(parent, style);
+        mPCS = new PropChangeSupport(this);
         setLayout(new GridLayout(7, false));
         
         mSpectraO = GridUtils.makeCheck(this, "O Spectrum", "2x1");
@@ -54,10 +60,31 @@ public class SimpleFilterPanel extends Composite
         GridUtils.makeLabel(this, "Generated:", "");
         mGenerated = GridUtils.makeCombo(this, new String[] { "Don't Care", "Generated", "Not Generated" }, "6x1");
         mSchemaController = new StarSchemaUIController(this, (style&SWT.READ_ONLY));
+        
+        SelectionAdapter anyChange = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e)
+            {
+                mPCS.fireMonotonicPropertyChange("data", true);
+            }
+        };
+        mSpectraO.addSelectionListener(anyChange);
+        mSpectraB.addSelectionListener(anyChange);
+        mSpectraA.addSelectionListener(anyChange);
+        mSpectraF.addSelectionListener(anyChange);
+        mSpectraG.addSelectionListener(anyChange);
+        mSpectraK.addSelectionListener(anyChange);
+        mSpectraM.addSelectionListener(anyChange);
+        mSpectraL.addSelectionListener(anyChange);
+        mSpectraT.addSelectionListener(anyChange);
+        mSpectraY.addSelectionListener(anyChange);
+        mGenerated.addSelectionListener(anyChange);
     }
     
     public StarFilter getFilter()
     {
+        if (mFilter == null)
+            return null;
         List<FilterConditionBean> ors = mFilter.getConditions();
         ors.clear();
         addSpectraFilter(ors, mSpectraO.getSelection(), "O");
@@ -163,5 +190,30 @@ public class SimpleFilterPanel extends Composite
             }
         }
         mSchemaController.setMetadata(mdSettings);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.addPropertyChangeListener(pcl);
+    }
+
+    public void addPropertyChangeListener(String prop, PropertyChangeListener pcl)
+    {
+        mPCS.addPropertyChangeListener(prop, pcl);
+    }
+
+    public void addUIPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.addPropertyChangeListener(pcl);
+    }
+
+    public void addUIPropertyChangeListener(String prop, PropertyChangeListener pcl)
+    {
+        mPCS.addUIPropertyChangeListener(prop, pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.removePropertyChangeListener(pcl);
     }
 }

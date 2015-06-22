@@ -9,6 +9,7 @@ public interface ISchemaComparator
 {
     public String[] getOptions();
     public boolean isArgFor(int option);
+    public Object isValidArgFor(int option, Object arg);
     public boolean isMatch(ChViewContextBean context, StarBean star, FilterConditionBean cond);
     public int getDefaultOption();
 }

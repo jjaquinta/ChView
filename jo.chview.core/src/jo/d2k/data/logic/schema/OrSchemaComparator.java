@@ -36,4 +36,15 @@ public class OrSchemaComparator implements ISchemaComparator
         return 0;
     }
 
+    @Override
+    public Object isValidArgFor(int option, Object arg)
+    {
+        if (!(arg instanceof List<?>))
+            return null;
+        List<?> list = (List<?>)arg;
+        if (list.size() == 0)
+            return null;
+        return arg;
+    }
+
 }

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rcp
 Bundle-SymbolicName: jo.chview.rcp;singleton:=true
-Bundle-Version: 1.0.0.20150618
+Bundle-Version: 1.0.0.20150619
 Bundle-Activator: jo.chview.rcp.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

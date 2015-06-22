@@ -1,5 +1,6 @@
 package jo.d2k.admin.rcp.viz.chview;
 
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.List;
 
@@ -7,7 +8,9 @@ import jo.d2k.data.data.FilterConditionBean;
 import jo.d2k.data.data.StarColumn;
 import jo.d2k.data.data.StarFilter;
 import jo.d2k.data.logic.StarColumnLogic;
+import jo.util.beans.PropChangeSupport;
 import jo.util.ui.utils.GridUtils;
+import jo.util.ui.utils.ImageUtils;
 import jo.util.ui.viewers.GenericTreeContentProvider;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -17,6 +20,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -25,6 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 public class AdvancedFilterPanel extends Composite
 {
     private StarFilter  mFilter;
+    private PropChangeSupport   mPCS;
 
     private Combo mMode;
     private TreeViewer  mTree;
@@ -39,6 +44,7 @@ public class AdvancedFilterPanel extends Composite
     public AdvancedFilterPanel(Composite parent, int style)
     {
         super(parent, style);
+        mPCS = new PropChangeSupport(this);
         setLayout(new GridLayout(7, false));
         
         mMode = GridUtils.makeCombo(this, new String[] {
@@ -47,7 +53,7 @@ public class AdvancedFilterPanel extends Composite
         }, "7x1 fill=h");
         mTree = new TreeViewer(this, SWT.FULL_SELECTION);
         mTree.setContentProvider(new FilterConditionContentProvider());
-        mTree.setLabelProvider(new LabelProvider());
+        mTree.setLabelProvider(new FilterConditionLabelProvider());
         GridUtils.setLayoutData(mTree.getControl(), "7x1 fill=hv");
         mAdd = GridUtils.makeButton(this, "Add", "");
         mEdit = GridUtils.makeButton(this, "Edit", "");
@@ -376,6 +382,7 @@ public class AdvancedFilterPanel extends Composite
     {
         ((FilterConditionContentProvider)mTree.getContentProvider()).reset();
         mTree.refresh();
+        mPCS.fireMonotonicPropertyChange("data", true);
     }
 
     public StarFilter getFilter()
@@ -389,6 +396,19 @@ public class AdvancedFilterPanel extends Composite
         mFilter = filter;
         mMode.select(filter.isAnd() ? 1 : 0);
         mTree.setInput(mFilter.getConditions());
+        mPCS.fireMonotonicPropertyChange("data", true);
+    }
+    
+    class FilterConditionLabelProvider extends LabelProvider
+    {
+        @Override
+        public Image getImage(Object element)
+        {
+            FilterConditionBean cond = (FilterConditionBean)element;
+            if (!FilterPanel.isValid(cond))
+                return ImageUtils.getMappedImage("error16");
+            return super.getImage(element);
+        }
     }
     
     class FilterConditionContentProvider extends GenericTreeContentProvider
@@ -420,5 +440,30 @@ public class AdvancedFilterPanel extends Composite
             }
             return super.doGetChildren(parent);
         }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.addPropertyChangeListener(pcl);
+    }
+
+    public void addPropertyChangeListener(String prop, PropertyChangeListener pcl)
+    {
+        mPCS.addPropertyChangeListener(prop, pcl);
+    }
+
+    public void addUIPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.addUIPropertyChangeListener(pcl);
+    }
+
+    public void addUIPropertyChangeListener(String prop, PropertyChangeListener pcl)
+    {
+        mPCS.addUIPropertyChangeListener(prop, pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl)
+    {
+        mPCS.removePropertyChangeListener(pcl);
     }
 }

@@ -66,4 +66,12 @@ public class TextSchemaComparator extends SimpleSchemaComparator
     {
         return 0;
     }
+
+    @Override
+    public Object isValidArgFor(int option, Object arg)
+    {
+        if (arg != null)
+            arg = arg.toString();
+        return arg;
+    }
 }

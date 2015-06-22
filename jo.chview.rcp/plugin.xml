@@ -14,6 +14,7 @@
       <imagemap name="app_busy7" path="images/app/busy7.png"/>
       <imagemap name="app_busy8" path="images/app/busy8.png"/>
       <imagemap name="app_busy9" path="images/app/busy9.png"/>
+      <imagemap name="error16" path="images/app/error.png"/>
       <imagemap name="tb_columns"  path="images/tb/tb_columns.png"/>
       <imagemap name="tb_copy"     path="images/tb/tb_copy.gif"/>
       <imagemap name="tb_del"      path="images/tb/tb_del.png"/>

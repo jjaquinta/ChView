@@ -52,4 +52,16 @@ public class ChoiceSchemaComparator extends SimpleSchemaComparator
     {
         return 0;
     }
+
+    @Override
+    public Object isValidArgFor(int option, Object arg)
+    {
+        if (arg != null)
+        {
+            arg = arg.toString();
+            if (((String)arg).length() == 0)
+                arg = null;
+        }
+        return arg;
+    }
 }
