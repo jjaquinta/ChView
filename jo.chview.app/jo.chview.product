@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ChView" id="jo.chview.app.product" application="jo.chview.app.application" version="1.0.0.20150618" useFeatures="false" includeLaunchers="true">
+<product name="ChView" id="jo.chview.app.product" application="jo.chview.app.application" version="1.0.0.20150619" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/jo.chview.app/images/about.png"/>
       <text>
-         Version 1.0.0.20150618
+         Version 1.0.0.20150619
       </text>
    </aboutInfo>
 

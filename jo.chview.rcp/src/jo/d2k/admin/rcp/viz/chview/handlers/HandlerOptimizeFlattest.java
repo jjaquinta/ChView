@@ -49,8 +49,8 @@ public class HandlerOptimizeFlattest extends AbstractHandler
             working.addAll(ChViewVisualizationLogic.mPreferences.getSelected());
             return working;
         }
-        List<StarBean> working = new ArrayList<StarBean>(ChViewVisualizationLogic.mPreferences.getStars().size());
-        working.addAll(ChViewVisualizationLogic.mPreferences.getStars());
+        List<StarBean> working = new ArrayList<StarBean>(ChViewVisualizationLogic.mPreferences.getFilteredStars().size());
+        working.addAll(ChViewVisualizationLogic.mPreferences.getFilteredStars());
         if (ChViewVisualizationLogic.mPreferences.getHidden().size() > 0)
             working.removeAll(ChViewVisualizationLogic.mPreferences.getHidden());
         return working;

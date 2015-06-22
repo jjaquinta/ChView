@@ -97,7 +97,7 @@ public class ChViewStarsPanel extends Canvas implements PaintListener
     @Override
     public void paintControl(PaintEvent paint)
     {
-        if (ChViewVisualizationLogic.mPreferences.getStars() == null)
+        if (ChViewVisualizationLogic.mPreferences.getFilteredStars() == null)
             return;
         Point size = getSize();
         Transform t = new Transform(getDisplay());

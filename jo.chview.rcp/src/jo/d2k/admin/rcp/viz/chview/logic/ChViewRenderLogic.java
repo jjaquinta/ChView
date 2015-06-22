@@ -11,7 +11,6 @@ import jo.d2k.data.data.StarBean;
 import jo.d2k.data.data.StarLink;
 import jo.d2k.data.data.StarRouteBean;
 import jo.d2k.data.logic.ChViewFormatLogic;
-import jo.d2k.data.logic.FilterLogic;
 import jo.d2k.data.logic.StarExtraLogic;
 import jo.d2k.data.logic.StarLogic;
 import jo.util.geom3d.Point3D;
@@ -53,7 +52,7 @@ public class ChViewRenderLogic
         if (mParams.isShowRoutes() && (mParams.getRoutes() != null))
             for (StarRouteBean route : mParams.getRoutes().toArray(new StarRouteBean[0]))
                 paintRoute(gc, route);
-        for (StarBean star : mParams.getStars().toArray(new StarBean[0]))
+        for (StarBean star : mParams.getFilteredStars().toArray(new StarBean[0]))
             paintStar(gc, star);
         if (mParams.getSelectionBand() != null)
             paintSelectionBand(gc);
@@ -64,7 +63,7 @@ public class ChViewRenderLogic
     public static TwoDDisplay takeTwoDSnapshot()
     {
         List<StarBean> stars = new ArrayList<>();
-        for (StarBean star : mParams.getStars())
+        for (StarBean star : mParams.getFilteredStars())
             if (!isHideStar(star))
                 stars.add(star);
         List<StarLink> links = new ArrayList<>();
@@ -108,7 +107,7 @@ public class ChViewRenderLogic
             gc.drawLine(top2.x, top2.y, bottom2.x, bottom2.y);
         }
         gc.setLineAttributes(ChViewVisualizationLogic.mPreferences.getGridStemStyle());
-        for (StarBean star : mParams.getStars())
+        for (StarBean star : mParams.getFilteredStars())
         {
             if (star.getParentRef() != null)
                 continue;
@@ -438,8 +437,6 @@ public class ChViewRenderLogic
     private static boolean isHidden(StarBean star)
     {
         if (mParams.getHidden().contains(star))
-            return true;
-        if (FilterLogic.isFiltered(mParams, star, mParams.getFilter()))
             return true;
         return false;
     }

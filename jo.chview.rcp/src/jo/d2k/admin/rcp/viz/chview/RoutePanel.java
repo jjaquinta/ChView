@@ -127,8 +127,8 @@ public class RoutePanel extends Composite
             }
         });
         List<String> proposals = new ArrayList<>();
-        if (ChViewVisualizationLogic.mPreferences.getStars() != null)
-            for (StarBean star : ChViewVisualizationLogic.mPreferences.getStars())
+        if (ChViewVisualizationLogic.mPreferences.getFilteredStars() != null)
+            for (StarBean star : ChViewVisualizationLogic.mPreferences.getFilteredStars())
             {
                 proposals.add(ChViewRenderLogic.getStarName(star));
                 mLookups.add(star);

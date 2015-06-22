@@ -43,7 +43,7 @@ public class DistanceMatrixReport
         Collection<StarBean> starList = params.getSelected();
         if (starList.size() < 2)
         {
-            starList = params.getStars();
+            starList = params.getFilteredStars();
             UtilLogic.winnowStars(starList, params);
         }
 		int size = starList.size();

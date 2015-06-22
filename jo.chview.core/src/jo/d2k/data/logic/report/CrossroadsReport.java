@@ -44,8 +44,7 @@ public class CrossroadsReport
         text.append("<h1>CROSSROADS REPORT</h1>");
         // find selected
         nums.stars = new ArrayList<StarBean>();
-        nums.stars.addAll(params.getStars());
-        UtilLogic.winnowStars(nums.stars, params);
+        nums.stars.addAll(params.getFilteredStars());
         if (nums.stars.size() == 0)
         {
             text.append("No objects to report on!");
@@ -155,7 +154,7 @@ public class CrossroadsReport
     {
         text.append("<table cellspacing=1 cellpadding=1>");
         int idx = 0;
-        for (StarBean s : params.getStars())
+        for (StarBean s : params.getFilteredStars())
         {
             Integer iv = (Integer)nums.crossed.get(s);
             if (iv == null)

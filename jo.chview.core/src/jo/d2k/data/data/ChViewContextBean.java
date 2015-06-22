@@ -36,6 +36,7 @@ public class ChViewContextBean extends PCSBean
     private double  mRadius;
     private double  mScale;
     private List<StarBean>  mStars;
+    private List<StarBean>  mFilteredStars;
     private List<SkyBean>   mSky;
     private List<StarLink>  mLinks;
     private List<StarRouteBean>  mRoutes;
@@ -530,5 +531,15 @@ public class ChViewContextBean extends PCSBean
         queuePropertyChange("linkDist4", mLinkDist4, linkDist4);
         mLinkDist4 = linkDist4;
         firePropertyChange();
+    }
+
+    public List<StarBean> getFilteredStars()
+    {
+        return mFilteredStars;
+    }
+
+    public void setFilteredStars(List<StarBean> filteredStars)
+    {
+        mFilteredStars = filteredStars;
     }
 }

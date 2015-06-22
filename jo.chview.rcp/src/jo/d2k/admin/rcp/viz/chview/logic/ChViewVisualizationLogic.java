@@ -12,6 +12,7 @@ import jo.d2k.admin.rcp.viz.chview.prefs.ChViewPreferencesEclipse;
 import jo.d2k.data.data.StarBean;
 import jo.d2k.data.data.StarFilter;
 import jo.d2k.data.data.StarRouteBean;
+import jo.d2k.data.logic.FilterLogic;
 import jo.d2k.data.logic.MetadataLogic;
 import jo.d2k.data.logic.SkyLogic;
 import jo.d2k.data.logic.StarExtraLogic;
@@ -58,7 +59,7 @@ public class ChViewVisualizationLogic
     {
         StarBean closest = null;
         double dist = -1;
-        for (StarBean s : mPreferences.getStars())
+        for (StarBean s : mPreferences.getFilteredStars())
         {
             Point3i l = getLocation(s);
             double d = Math.abs(l.x - x) + Math.abs(l.y - y);
@@ -83,29 +84,43 @@ public class ChViewVisualizationLogic
             return;
         }
         List<StarBean> stars = StarLogic.getAllWithin(mPreferences.getCenter().x, mPreferences.getCenter().y, mPreferences.getCenter().z, mPreferences.getRadius());
+        List<StarBean> filteredStars = new ArrayList<StarBean>();
+        StarFilter filter = mPreferences.getFilter();
+        if (!FilterLogic.isAnyFilter(filter))
+        {
+            filter = null;
+            filteredStars.addAll(stars);
+        }
         for (Iterator<StarBean> i = stars.iterator(); i.hasNext(); )
-            if (i.next().getParent() != 0)
+        {
+            StarBean next = i.next();
+            if (next.getParent() != 0)
                 i.remove();
+            else if (filter != null)
+                if (!FilterLogic.isFiltered(mPreferences, next, filter))
+                    filteredStars.add(next);
+        }
         mPreferences.setStars(stars);
-        mPreferences.setLinks(StarExtraLogic.findLinks(mPreferences.getStars(), mPreferences.getLinkDist4()));
-        mPreferences.setRoutes(StarRouteLogic.getAllLinking(mPreferences.getStars()));
+        mPreferences.setFilteredStars(filteredStars);
+        mPreferences.setLinks(StarExtraLogic.findLinks(mPreferences.getFilteredStars(), mPreferences.getLinkDist4()));
+        mPreferences.setRoutes(StarRouteLogic.getAllLinking(mPreferences.getFilteredStars()));
         //StarExtraLogic.pruneLinks(mPreferences.getLinks(), 3, mPreferences.getLinkDist1());
         // prune selection
         for (Iterator<StarBean> i = mPreferences.getSelected().iterator(); i.hasNext(); )
         {
             StarBean sel = i.next();
-            if (!mPreferences.getStars().contains(sel))
+            if (!mPreferences.getFilteredStars().contains(sel))
                 i.remove();
         }
         // prune hidden
         for (Iterator<StarBean> i = mPreferences.getHidden().iterator(); i.hasNext(); )
         {
             StarBean sel = i.next();
-            if (!mPreferences.getStars().contains(sel))
+            if (!mPreferences.getFilteredStars().contains(sel))
                 i.remove();
         }
         if (mPreferences.getFocus() != null)
-            if (!mPreferences.getStars().contains(mPreferences.getFocus()))
+            if (!mPreferences.getFilteredStars().contains(mPreferences.getFocus()))
                 mPreferences.setFocus(null);
         mPreferences.getSky().clear();
         if (mPreferences.isShowSky())
@@ -298,7 +313,7 @@ public class ChViewVisualizationLogic
             rectangle.y += rectangle.height;
             rectangle.height *= -1;
         }
-        for (StarBean star : mPreferences.getStars())
+        for (StarBean star : mPreferences.getFilteredStars())
         {
             if (mPreferences.getSelected().contains(star))
                 continue;
@@ -339,7 +354,7 @@ public class ChViewVisualizationLogic
     
     public static void showOnly(Collection<StarBean> stars)
     {
-        mPreferences.getHidden().addAll(mPreferences.getStars());
+        mPreferences.getHidden().addAll(mPreferences.getFilteredStars());
         mPreferences.getHidden().removeAll(stars);
         mPreferences.fireMonotonicPropertyChange("data");
     }
@@ -347,7 +362,7 @@ public class ChViewVisualizationLogic
     public static void setFilter(StarFilter filter)
     {
         mPreferences.getFilter().set(filter);
-        mPreferences.fireMonotonicPropertyChange("data");
+        updateData(true);
     }
 
     public static void makeRoute(int routeNum)

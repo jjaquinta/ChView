@@ -63,7 +63,7 @@ public class StarsTableView extends ViewPart implements PropertyChangeListener
     public void createPartControl(Composite parent)
     {
         mResults = new StarsViewer(parent, SWT.FULL_SELECTION|SWT.MULTI);
-        mResults.setInput(ChViewVisualizationLogic.mPreferences.getStars());
+        mResults.setInput(ChViewVisualizationLogic.mPreferences.getFilteredStars());
         GridUtils.setLayoutData(mResults.getControl(), "fill=hv");
         mResults.addSelectionChangedListener(new ISelectionChangedListener() {            
             @Override
@@ -230,7 +230,7 @@ public class StarsTableView extends ViewPart implements PropertyChangeListener
     
     private void doRefresh()
     {
-        mResults.setInput(ChViewVisualizationLogic.mPreferences.getStars());
+        mResults.setInput(ChViewVisualizationLogic.mPreferences.getFilteredStars());
         mResults.refresh();
     }
 

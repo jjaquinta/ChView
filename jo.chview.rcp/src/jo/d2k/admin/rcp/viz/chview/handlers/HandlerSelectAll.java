@@ -12,7 +12,7 @@ public class HandlerSelectAll extends AbstractHandler
     @Override
     public Object execute(ExecutionEvent ev) throws ExecutionException
     {
-        ChViewVisualizationLogic.addToSelection(ChViewVisualizationLogic.mPreferences.getStars());
+        ChViewVisualizationLogic.addToSelection(ChViewVisualizationLogic.mPreferences.getFilteredStars());
         return null;
     }
 

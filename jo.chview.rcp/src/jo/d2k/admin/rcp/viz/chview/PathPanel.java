@@ -263,8 +263,8 @@ public class PathPanel extends Composite
     public void updateProposals()
     {
         List<String> proposals = new ArrayList<>();
-        if (ChViewVisualizationLogic.mPreferences.getStars() != null)
-            for (StarBean star : ChViewVisualizationLogic.mPreferences.getStars())
+        if (ChViewVisualizationLogic.mPreferences.getFilteredStars() != null)
+            for (StarBean star : ChViewVisualizationLogic.mPreferences.getFilteredStars())
             {
                 if (star.getParent() != 0)
                     continue;

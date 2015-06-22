@@ -59,10 +59,7 @@ public class DistanceReport
         Collection<StarBean> starList = params.getSelected();
         StarBean focus = params.getFocus();
         if (starList.size() < 2)
-        {
-            starList = params.getStars();
-            UtilLogic.winnowStars(starList, params);
-        }
+            starList = params.getFilteredStars();
 		int size = starList.size();
 		if (size < 2)
 			text.append("No objects selected to report on!");
