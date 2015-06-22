@@ -23,7 +23,10 @@ public class GenericAction extends Action
 {
     public static Shell getShell()
     {
-        return Display.getCurrent().getActiveShell();
+        Display d = Display.getCurrent();
+        if (d == null)
+            d = Display.getDefault();
+        return d.getActiveShell();
     }
     
     public static Shell getShell(Shell s)

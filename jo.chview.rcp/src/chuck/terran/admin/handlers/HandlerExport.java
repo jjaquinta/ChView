@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import jo.d2k.data.logic.DataLogic;
+import jo.d2k.data.logic.RuntimeLogic;
 import jo.util.ui.act.GenericAction;
 import jo.util.utils.ProgMonWrapper;
 
@@ -33,7 +34,9 @@ public class HandlerExport extends AbstractHandler
             return;
         final StringBuffer report = new StringBuffer();
         ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(Display.getDefault().getActiveShell());
-        try {  
+        try
+        {
+            RuntimeLogic.incrementBusy();
             progressDialog.run(false, true, new IRunnableWithProgress() {
                 @Override
                 public void run(IProgressMonitor pm) throws InvocationTargetException,
@@ -50,6 +53,7 @@ public class HandlerExport extends AbstractHandler
                     }
                 }
             }); 
+            RuntimeLogic.decrementBusy();
             if (report.length() > 0)
                 MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Export Data", "Export complete. Exported "+report);
         }
