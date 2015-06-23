@@ -87,16 +87,15 @@ public class ChViewVisualizationLogic
         List<StarBean> filteredStars = new ArrayList<StarBean>();
         StarFilter filter = mPreferences.getFilter();
         if (!FilterLogic.isAnyFilter(filter))
-        {
             filter = null;
-            filteredStars.addAll(stars);
-        }
         for (Iterator<StarBean> i = stars.iterator(); i.hasNext(); )
         {
             StarBean next = i.next();
             if (next.getParent() != 0)
                 i.remove();
-            else if (filter != null)
+            else if (filter == null)
+                filteredStars.add(next);
+            else
                 if (!FilterLogic.isFiltered(mPreferences, next, filter))
                     filteredStars.add(next);
         }
