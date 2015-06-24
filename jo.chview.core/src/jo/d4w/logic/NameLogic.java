@@ -3,12 +3,13 @@ package jo.d4w.logic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import jo.d4w.data.PopulatedObjectBean;
-import jo.util.utils.DebugUtils;
 import jo.util.utils.io.ResourceUtils;
 
 public class NameLogic
@@ -20,7 +21,7 @@ public class NameLogic
     public static String getCityName(Random rnd)
     {
         long idx = rnd.nextLong();
-        //DebugUtils.trace("idx="+idx);
+        //System.out.println("idx="+idx);
         if (mCityNameCache.containsKey(idx))
             return mCityNameCache.get(idx);
         try
@@ -28,7 +29,7 @@ public class NameLogic
             InputStream is = ResourceUtils.loadSystemResourceStream("cities.txt", PopulatedObjectBean.class);
             // seek to random position in file
             long off = (Math.abs(idx) % CITY_FILE_LENGTH);
-            //DebugUtils.trace("off="+idx);
+            //System.out.println("off="+idx);
             is.skip(off);
             // skip until newline
             for (;;)
@@ -48,8 +49,10 @@ public class NameLogic
                 name.append((char)ch);
             }
             is.close();
-            mCityNameCache.put(idx, name.toString());
-            return name.toString();
+            String n = name.toString();
+            n = deAccent(n);
+            mCityNameCache.put(idx, n);
+            return n;
         }
         catch (IOException e)
         {
@@ -57,13 +60,20 @@ public class NameLogic
         }
     }
     
+    private static Pattern mDeAccentPattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+    
+    public static String deAccent(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
+        return mDeAccentPattern.matcher(nfdNormalizedString).replaceAll("");
+    }
+    
     public static void main(String[] argv)
     {
         Random r = new Random(0);
         for (int i = 0; i < 16; i++)
-            DebugUtils.info(i+": "+getCityName(r));
+            System.out.println(i+": "+getCityName(r));
         r = new Random(0);
         for (int i = 0; i < 16; i++)
-            DebugUtils.info(i+": "+getCityName(r));
+            System.out.println(i+": "+getCityName(r));
     }
 }
