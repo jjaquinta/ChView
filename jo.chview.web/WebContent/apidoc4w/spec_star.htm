@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Forty Worlds REST Service API - region://</title>
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+</head>
+<body>
+<h1>Forty Worlds REST Service API - star://</h1>
+<p>
+This returns information on a star. 
+</p>
+<table>
+<tr><td align="right">Scheme:</td><td>star://</td></tr>
+<tr><td align="right">Authority:</td><td>s<i>id</i>@<i>quad</i></td></tr>
+<tr><td align="right">Path:<i>none</i></td></tr>
+<tr><td align="right">Query Params:</td><td><i>none</i></td></tr>
+<tr><td align="right">API Params:</td><td>starAs = star | uri | sun | sys</td></tr>
+</table>
+<h3>Examples</h3>
+<ul>
+<li>star://1000715@071500000000 <a href="../api4w?f=json&u=star://1000715@071500000000">JSON</a> <a href="../api4w?f=xml&u=star://1000715@071500000000">XML</a></li>
+<li>starAs=uri&amp;u=star://1000715@071500000000 <a href="../api4w?f=json&starAs=uri&u=star://1000715@071500000000">JSON</a> <a href="../api4w?f=xml&starAs=uri&u=star://1000715@071500000000">XML</a></li>
+<li>starAs=sun&amp;u=star://1000715@071500000000 <a href="../api4w?f=json&starAs=sun&u=star://1000715@071500000000">JSON</a> <a href="../api4w?f=xml&starAs=sun&u=star://1000715@071500000000">XML</a></li>
+<li>starAs=sys&amp;u=star://1000715@071500000000 <a href="../api4w?f=json&starAs=sys&u=star://1000715@071500000000">JSON</a> <a href="../api4w?f=xml&starAs=sys&u=star://1000715@071500000000">XML</a></li>
+</ul>
+
+</body>
+</html>
