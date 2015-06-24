@@ -1,0 +1,30 @@
+<modules>
+    <!--  next type = 16 -->
+    <module type="1" group="energygeneration" tier="1" placement="cold" name="Energy Generator 1K" cost="1000" 
+        unitsPerHour="1000" />
+    <module type="12" group="energygeneration" tier="2" placement="cold" name="Energy Generator 4K" cost="8000" 
+        unitsPerHour="4000" />
+    <module type="13" group="energygeneration" tier="3" placement="cold" name="Energy Generator 16K" cost="64000" 
+        unitsPerHour="16000" />
+    <module type="2" group="energystore" tier="1" placement="cold" name="Energy Capacitor 1K" cost="100" 
+        maxCapacity="1000" />
+    <module type="14" group="energystore" tier="1" placement="cold" name="Energy Capacitor 4K" cost="800" 
+        maxCapacity="1000" />
+    <module type="15" group="energystore" tier="1" placement="cold" name="Energy Capacitor 16K" cost="6400" 
+        maxCapacity="1000" />
+    <module type="3" group="spacedrive" tier="1" placement="cold" name="Space Drive" cost="5000" />
+    <module type="4" group="stardrive" tier="1" placement="cold" name="Star Drive" cost="15000" />
+    <module type="5" group="habitation" tier="1" placement="cold" name="Crew Compartment" cost="4000" />
+    <module type="6" group="sensor" tier="1" placement="cold" name="Simple Radar" cost="300" 
+        sensorType="radar" energyPerHour="100" maxRange="1" scanTime="10" />
+    <module type="7" group="sensor" tier="2" placement="cold" name="Basic Radar" cost="600" 
+        sensorType="radar" energyPerHour="200" maxRange="4" scanTime="10"/>
+    <module type="8" group="sensor" tier="3" placement="cold" name="Distant Radar" cost="1200" 
+        sensorType="radar" energyPerHour="400" maxRange="16" scanTime="10"/>
+    <module type="9" group="sensor" tier="1" placement="cold" name="Simple Spectrometer" cost="300" 
+        sensorType="spectral" energyPerHour="50" maxRange="1" scanTime="10"/>
+    <module type="10" group="sensor" tier="2" placement="cold" name="Basic Spectrometer" cost="600" 
+        sensorType="spectral" energyPerHour="100" maxRange="4" scanTime="10"/>
+    <module type="11" group="sensor" tier="3" placement="cold" name="Distant Spectrometer" cost="1200" 
+        sensorType="spectral" energyPerHour="200" maxRange="16" scanTime="10"/>
+</modules>

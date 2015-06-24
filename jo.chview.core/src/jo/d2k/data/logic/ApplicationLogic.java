@@ -14,6 +14,15 @@ public class ApplicationLogic
     public static final String METADATA_HANDLER = "jo.d2k.data.io.IOMetadataHandler";
     public static final String DELETION_HANDLER = "jo.d2k.data.io.IODeletionHandler";
 
+    public static final String USER_HANDLER = "jo.d2k.data.io.IOUserHandler";
+    public static final String SCORE_HANDLER = "jo.d2k.data.io.IOScoreHandler";
+    public static final String LIFE_SCENARIO_HANDLER = "jo.d2k.data.io.IOLifeScenarioHandler";
+    public static final String SHIP_HANDLER = "jo.d2k.data.io.IOShipHandler";
+    public static final String MODULE_HANDLER = "jo.d2k.data.io.IOModuleHandler";
+    public static final String MODULE_SPEC_HANDLER = "jo.d2k.data.io.IOModuleSpecHandler";
+    public static final String STATION_HANDLER = "jo.d2k.data.io.IOStationHandler";
+    public static final String SCAN_HANDLER = "jo.d2k.data.io.IOScanHandler";
+
     private static Map<String,Object> mApp = null;
 
     public static synchronized Map<String,Object> getApp()

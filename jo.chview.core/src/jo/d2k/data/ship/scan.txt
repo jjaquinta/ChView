@@ -1,0 +1,65 @@
+// what is covered by which scans
+
+Always known:
+    private double     mA;                     // semi-major axis of solar orbit
+                                              // (in AU)
+    private double     mE;                     // eccentricity of solar orbit
+    private boolean    mGasGiant;             // TRUE if the planet is a gas
+                                              // giant
+    private int        mOrbitZone;            // the 'zone' of the planet
+    private double     mOrbPeriod;            // length of the local year (days)
+    private double     mAlbedo;                // albedo of the planet
+
+Radar:
+    private double     mMass;                  // mass (in solar masses)
+    private double 	   mRadius;                // equatorial radius (in km)
+    private double     mAxialTilt;            // units of degrees
+    private double     mDensity;               // density (in g/cc)
+    private double     mDay;                   // length of the local day (hours)
+    private boolean    mResonantPeriod;       // TRUE if in resonant rotation
+    private double     mEscVelocity;          // units of cm/sec
+    private double     mSurfAccel;            // units of cm/sec2
+    private double     mSurfGrav;             // units of Earth gravities
+    private double     mCoreRadius;           // radius of the rocky core (in
+    private int        mMinorMoons;
+                                              // km)
+
+Spectragraph:
+    private double     mDustMass;             // mass, ignoring gas
+    private double     mGasMass;              // mass, ignoring dust
+    private double     mRMSVelocity;          // units of cm/sec
+    private double     mMolecWeight;          // smallest molecular weight
+                                              // retained
+    private double     mVolatileGasInventory;
+    private double     mSurfPressure;         // units of millibars (mb)
+    private boolean    mGreenhouseEffect;     // runaway greenhouse effect?
+    private double     mBoilPoint;            // the boiling point of water
+                                              // (Kelvin)
+    private double     mExosphericTemp;       // units of degrees Kelvin
+    private double     mEstimatedTemp;        // quick non-iterative estimate
+                                              // (K)
+    private double     mEstimatedTerrTemp;    // for terrestrial moons and the
+                                              // like
+    private double     mSurfTemp;             // surface temperature in Kelvin
+    private double     mGreenhsRise;          // Temperature rise due to
+                                              // greenhouse
+    private double     mHighTemp;             // Day-time temperature
+    private double     mLowTemp;              // Night-time temperature
+    private double     mMaxTemp;              // Summer/Day
+    private double     mMinTemp;              // Winter/Night
+    private double     mHydrosphere;           // fraction of surface covered
+    private double     mCloudCover;           // fraction of surface covered
+    private double     mIceCover;             // fraction of surface covered
+    private double     mRockCover;             // fraction of surface covered
+    private double     mHydroAlbedo;           // actual albedo of water
+    private double     mCloudAlbedo;           // actual albedo of clouds
+    private double     mIceAlbedo;             // actual albedo of ice
+    private double     mRockAlbedo;             // actual albedo of rock
+    private List<GasBean>  mAtmosphere;
+
+Altimiter
+
+    private SunBean        mSun;
+    private PlanetType mType;                  // Type code
+    
+    private boolean mTerraformed;
