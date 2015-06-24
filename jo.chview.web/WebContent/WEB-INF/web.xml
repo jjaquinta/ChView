@@ -16,6 +16,11 @@
 	<init-param><param-name>dataSourceDefault</param-name><param-value>true</param-value></init-param>    
     <load-on-startup>1</load-on-startup>
   </servlet>
+    <servlet>
+    <servlet-name>api4w</servlet-name>
+    <servlet-class>jo.d4w.web.servlet.APIServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>  
   <servlet-mapping>
     <servlet-name>test</servlet-name>
     <url-pattern>/test</url-pattern>
@@ -24,6 +29,10 @@
     <servlet-name>chview</servlet-name>
     <url-pattern>/chview/*</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>api4w</servlet-name>
+    <url-pattern>/api4w</url-pattern>
+  </servlet-mapping>  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Forty Worlds REST Service API - region://</title>
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+</head>
+<body>
+<h1>Forty Worlds REST Service API - region://</h1>
+<p>
+This returns a region of space. This is a list of stars occuring in the area defined.
+</p>
+<table>
+<tr><td align="right">Scheme:</td><td>region://</td></tr>
+<tr><td align="right">Authority:</td><td>sphere | cube | quad</td></tr>
+<tr><td align="right">Path:</td><td>x/y/z/r | x1/y1/z1/x2/y2/z2 | <i>quadNum</i></td></tr>
+<tr><td align="right">Query Params:</td><td><i>none</i></td></tr>
+<tr><td align="right">API Params:</td><td>starAs = star | uri | sun | sys</td></tr>
+</table>
+<h3>Examples</h3>
+<ul>
+<li>region://quad/071100000000 <a href="../api4w?f=json&u=region://quad/071100000000">JSON</a> <a href="../api4w?f=xml&u=region://quad/071100000000">XML</a></li>
+<li>region://sphere/27200/0/0/15 <a href="../api4w?f=json&u=region://sphere/27200/0/0/15">JSON</a> <a href="../api4w?f=xml&u=region://sphere/27200/0/0/15">XML</a></li>
+<li>region://cube/27190/-10/-10/27210/10/10 <a href="../api4w?f=json&u=region://cube/27190/-10/-10/27210/10/10">JSON</a> <a href="../api4w?f=xml&u=region://cube/27190/-10/-10/27210/10/10">XML</a></li>
+<li>starAs=uri&amp;u=region://cube/27190/-10/-10/27210/10/10 <a href="../api4w?f=json&starAs=uri&u=region://cube/27190/-10/-10/27210/10/10">JSON</a> <a href="../api4w?f=xml&starAs=uri&u=region://cube/27190/-10/-10/27210/10/10">XML</a></li>
+<li>starAs=sun&amp;u=region://cube/27190/-10/-10/27210/10/10 <a href="../api4w?f=json&starAs=sun&u=region://cube/27190/-10/-10/27210/10/10">JSON</a> <a href="../api4w?f=xml&starAs=sun&u=region://cube/27190/-10/-10/27210/10/10">XML</a></li>
+<li>starAs=sys&amp;u=region://cube/27190/-10/-10/27210/10/10 <a href="../api4w?f=json&starAs=sys&u=region://cube/27190/-10/-10/27210/10/10">JSON</a> <a href="../api4w?f=xml&starAs=sys&u=region://cube/27190/-10/-10/27210/10/10">XML</a></li>
+</ul>
+
+</body>
+</html>

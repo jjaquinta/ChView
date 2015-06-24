@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Forty Worlds REST Service API</title>
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+</head>
+<body>
+<h1>REST Service for Forty Worlds code</h1>
+<p>
+Below are the entry points for the API documentation.
+Samples are provided, but you can also experiment <a href="uribuilder.htm">here</a>.
+</p>
+<table>
+<tr><th>Scheme</th><th>Description</th><th>Sample</th><th>Spec</th></tr>
+<tr><td><a href="spec_region.htm">region://</a></td><td>Region Information</td><td>region://quad/071100000000</td></tr>
+<tr><td><a href="spec_star.htm">star://</a></td><td>Star Information</td><td>star://1000715@071500000000</td></tr>
+<tr><td><a href="spec_body.htm">body://</a></td><td>Body Information</td><td>body://1000715@071500000000/0</td></tr>
+<tr><td><a href="spec_pop.htm">pop://</a></td><td>Population Information</td><td>pop://1000715@071500000000/1</td></tr>
+<tr><td><a href="spec_cargolots.htm">cargolots://</a></td><td>Cargo Availability</td><td>cargolots://1000715@071500000000/1?date=1</td></tr>
+<tr><td><a href="spec_cargo.htm">cargo://</a></td><td>Cargo Item</td><td>cargo://1000715@071500000000/0?date=1&amp;seed=1693172465131647637</td></tr>
+</table>
+<hr/>
+<h3>Jose URIs</h3>
+<table>
+<tr><th>Scheme</th><th>Description</th><th>Sample</th><th>Spec</th></tr>
+<tr><td><a href="spec_port.htm">port://</a></td><td>Port Information</td><td>port://2010712@071200010000/Havelock</td></tr>
+<tr><td><a href="spec_ports.htm">ports://</a></td><td>Port Information</td><td>ports://d010711@071100010000/4</td></tr>
+<tr><td><a href="spec_ondock.htm">ondock://</a></td><td>Cargo on Dock</td><td>ondock://2010712@071200010000/Havelock?date=1110-5</td></tr>
+</table>
+ 
+<h2>Notes</h2>
+<p>The Forty World code uses a "universal coordinate system".
+Distances are measured in light years, and the center of the galaxy is at 0,0,0.
+The actual "Forty Worlds" is centered at 27200,0,0.
+</p>
+
+</body>
+</html>
