@@ -2,6 +2,7 @@ package jo.util.html;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
@@ -62,6 +63,14 @@ public class URIBuilder
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof URIBuilder)
+            return toString().equals(obj.toString());
+        return super.equals(obj);
+    }
     
     @Override
     public String toString()
@@ -99,7 +108,9 @@ public class URIBuilder
         if (mQuery.size() > 0)
         {
             boolean first = true;
-            for (Object k : mQuery.keySet())
+            String[] keys = mQuery.keySet().toArray(new String[0]);
+            Arrays.sort(keys);
+            for (Object k : keys)
             {
                 Object v = mQuery.get(k);
                 if (first)

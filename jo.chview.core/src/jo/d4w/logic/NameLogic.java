@@ -14,7 +14,7 @@ import jo.util.utils.io.ResourceUtils;
 
 public class NameLogic
 {
-    private static final long CITY_FILE_LENGTH = 132454 - 11;
+    private static final long CITY_FILE_LENGTH = 10011 - 11;
     
     private static Map<Long, String> mCityNameCache = new HashMap<Long, String>();
     
@@ -35,6 +35,12 @@ public class NameLogic
             for (;;)
             {
                 int ch = is.read();
+                if (ch < 0)
+                {
+                    is.close();
+                    is = ResourceUtils.loadSystemResourceStream("cities.txt", PopulatedObjectBean.class);
+                    break;
+                }
                 if (ch == '\n')
                     break;
             }

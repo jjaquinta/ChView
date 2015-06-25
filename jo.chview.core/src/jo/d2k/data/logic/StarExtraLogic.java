@@ -169,7 +169,8 @@ public class StarExtraLogic
         int classOff = getClassOff(clazz);
         int specOff = getSpectraOff(spectra)*10 + getDecimalOff(spectra);
         STAR_LUMENOSITY[classOff][specOff] = lumen;
-        STAR_TEMPERATURE[classOff][specOff] = temp;
+        if (temp > 0)
+            STAR_TEMPERATURE[classOff][specOff] = temp;
     }
     
     private static void normalizeTables()
@@ -182,6 +183,10 @@ public class StarExtraLogic
     {
         for (int clOff = 0; clOff < table.length; clOff++)
         {
+//            System.out.print("Normalizing: ");
+//            for (int spOff = 0; spOff < table[clOff].length; spOff++)
+//                System.out.print(table[clOff][spOff]+"   ");
+//            System.out.println();
             int start = -1;
             int end = -1;
             for (int spOff = 0; spOff < table[clOff].length; spOff++)
@@ -213,6 +218,7 @@ public class StarExtraLogic
     
     private static void normalizeSpan(double[] data, int start, int end, double[] backup)
     {
+//        System.out.println("Normalizing span "+start+" to "+end);
         if (start == 0)
         {
             if (end == data.length - 1)
@@ -223,17 +229,21 @@ public class StarExtraLogic
                 for (int i = start; i <= end; i++)
                     data[i] = v;
             }
-            return;
         }
-        if (end == data.length - 1)
+        else if (end == data.length - 1)
         {
             double v = data[start - 1];
             for (int i = start; i <= end; i++)
                 data[i] = v;
             return;
         }
-        for (int i = start; i <= end; i++)
-            data[i] = MathUtils.interpolate(i, start - 1, end - 1, data[start - 1], data[end - 1]);
+        else
+            for (int i = start; i <= end; i++)
+                data[i] = MathUtils.interpolate(i, start - 1, end + 1, data[start - 1], data[end - 1]);
+//        System.out.print("Result: ");
+//        for (int spOff = start; spOff <= end; spOff++)
+//            System.out.print(data[spOff]+"   ");
+//        System.out.println();
     }
 
     static

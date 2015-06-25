@@ -95,7 +95,7 @@ public class D4WStarGenLogic
     
     private static int[] genQuadPopDistribution(Random rnd, int qx, int qy, int qz)
     {
-        int[] popDist = new int[7];
+        int[] popDist = new int[StarLogic.SPECTRA.length()];
         int numStars = genQuadPopulation(rnd, qx, qy, qz);
         while (numStars-- > 0)
         {
