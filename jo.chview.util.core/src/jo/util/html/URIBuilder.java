@@ -210,7 +210,10 @@ public class URIBuilder
     }
     public void setQuery(String k, String v)
     {
-        mQuery.setProperty(k, v);
+        if (v == null)
+            mQuery.remove(k);
+        else
+            mQuery.setProperty(k, v);
     }
     public String getQuery(String k)
     {

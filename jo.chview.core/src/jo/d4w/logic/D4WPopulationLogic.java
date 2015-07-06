@@ -1,5 +1,7 @@
 package jo.d4w.logic;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -387,7 +389,15 @@ public class D4WPopulationLogic
             return null;
         SunBean sun = D4WSystemLogic.generateSystem(star);
         PopulatedSystemBean sys = getInstance(sun);
-        String path = u.getPath();
+        String path;
+        try
+        {
+            path = URLDecoder.decode(u.getPath(), "utf-8");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            throw new IllegalStateException(e);
+        }
         if (path.startsWith("/"))
             path = path.substring(1);
         if (Character.isDigit(path.charAt(0)))

@@ -1,5 +1,7 @@
 package jo.d4w.web.logic;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -102,7 +104,15 @@ public class PortLogic
         port.setZ(star.getZ());
         port.setName(D4WPopulationLogic.getName(pop));
         port.setPopStats(new PopulatedObjectBean(pop));
-        String uri = "port://" + star.getURI().substring(7)+"/"+port.getName(); 
+        String uri;
+        try
+        {
+            uri = "port://" + star.getURI().substring(7)+"/"+URLEncoder.encode(port.getName(), "utf-8");
+        }
+        catch (UnsupportedEncodingException e1)
+        {
+            throw new IllegalStateException(e1);
+        } 
         port.setURI(uri);
         port.setRGB(StarExtraLogic.getStarColorRGB(star));
         double a = normProduction(pop.getAgriculturalProduction());

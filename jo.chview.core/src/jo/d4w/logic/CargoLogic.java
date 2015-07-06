@@ -1,6 +1,8 @@
 package jo.d4w.logic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +43,10 @@ public class CargoLogic
         
         int q = (int)Math.ceil(Math.log10(port.getPopulation())*(rnd.nextGaussian()/2 + 1));
         List<CargoLot> lots = new ArrayList<CargoLot>();
+        TradeGood[] goods = getSortedGoods(weights);
         while (q-- > 0)
         {
-            CargoLot lot = makeLot(port, date, rnd.nextLong(), weights, totalWeight);
+            CargoLot lot = makeLot(port, date, rnd.nextLong(), goods, weights, totalWeight);
             lots.add(lot);
         }
         return lots;
@@ -63,13 +66,27 @@ public class CargoLogic
         double totalWeight = 0;
         for (Double weight : weights.values())
             totalWeight += weight;
-        return makeLot(pop, date, seed, weights, totalWeight);
+        TradeGood[] goods = getSortedGoods(weights);
+        return makeLot(pop, date, seed, goods, weights, totalWeight);
+    }
+
+    public static TradeGood[] getSortedGoods(Map<TradeGood, Double> weights)
+    {
+        TradeGood[] goods = weights.keySet().toArray(new TradeGood[0]);
+        Arrays.sort(goods, new Comparator<TradeGood>() {
+            @Override
+            public int compare(TradeGood o1, TradeGood o2)
+            {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return goods;
     }
     
-    private static CargoLot makeLot(PopulatedObjectBean port, long date, long seed, Map<TradeGood, Double> weights, double totalWeight)
+    private static CargoLot makeLot(PopulatedObjectBean port, long date, long seed, TradeGood[] goods, Map<TradeGood, Double> weights, double totalWeight)
     {
         Random rnd = new Random(seed);
-        TradeGood classification = findClassification(weights, totalWeight, rnd);
+        TradeGood classification = findClassification(goods, weights, totalWeight, rnd);
         CargoLot lot = new CargoLot();
         lot.setOID(seed);
         lot.setDateAvailable(date);
@@ -82,11 +99,11 @@ public class CargoLogic
         return lot;
     }
     
-    private static TradeGood findClassification(Map<TradeGood, Double> weights,
+    private static TradeGood findClassification(TradeGood[] goods, Map<TradeGood, Double> weights,
             double totalWeight, Random rnd)
     {
         double weight = totalWeight*rnd.nextDouble();
-        for (TradeGood good : weights.keySet())
+        for (TradeGood good : goods)
         {
             weight -= weights.get(good);
             if (weight <= 0)
