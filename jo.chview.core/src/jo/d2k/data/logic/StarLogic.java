@@ -22,6 +22,7 @@ import java.util.Set;
 import jo.d2k.data.data.StarBean;
 import jo.d2k.data.data.StarSchemaBean;
 import jo.d2k.data.io.IOStarHandler;
+import jo.d4w.logic.D4WStarGenLogic;
 import jo.util.beans.Bean;
 import jo.util.beans.BeanLogic;
 import jo.util.beans.CSVLogic;
@@ -347,11 +348,19 @@ public class StarLogic
         double highZ = Math.max(Z1, Z2);
         //DebugUtils.trace("X: "+lowX+" to "+highX);
         Set<String> quads = new HashSet<String>();
-        for (double x = lowX; x <= highX; x += QUAD_SIZE/2)
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, lowY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, lowY, highZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, highY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, highY, highZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, lowY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, lowY, highZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, highY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, highY, highZ));
+        for (double x = lowX + QUAD_SIZE/2; x <= highX; x += QUAD_SIZE/2)
         {
             //DebugUtils.trace("Testing "+x);
-            for (double y = lowY; y <= highY; y += QUAD_SIZE/2)
-                for (double z = lowZ; z <= highZ; z += QUAD_SIZE/2)
+            for (double y = lowY + QUAD_SIZE/2; y <= highY; y += QUAD_SIZE/2)
+                for (double z = lowZ + QUAD_SIZE/2; z <= highZ; z += QUAD_SIZE/2)
                 {
                     String quadrant = getQuadrant(x, y, z);
                     quads.add(quadrant);
