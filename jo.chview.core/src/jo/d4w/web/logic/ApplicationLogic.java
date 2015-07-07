@@ -16,6 +16,7 @@ public class ApplicationLogic
     private static Properties  mStore;
     private static boolean      mStoreDirty;
     private static boolean      mInitialized = false;
+    private static File         mStoreFile;
     
     public static void init()
     {
@@ -30,14 +31,26 @@ public class ApplicationLogic
     
     private static File getStoreFile()
     {
+        if (mStoreFile != null)
+            return mStoreFile;
         String loc = System.getProperty("d4w.store.location");
         if (!StringUtils.isTrivial(loc))
-            return new File(loc);
-        String user = System.getProperty("user.name");
-        if ("root".equals(user))
-            return new File(System.getProperty("user.home")+"/d4w_store.properties");
+            mStoreFile = new File(loc);
         else
-            return new File("c:\\temp\\data\\d4w_store.properties");
+        {
+            String user = System.getProperty("user.name");
+            if ("root".equals(user))
+                mStoreFile = new File(System.getProperty("user.home")+"/d4w_store.properties");
+            else
+                mStoreFile = new File("c:\\temp\\data\\d4w_store.properties");
+        }
+        return mStoreFile;
+    }
+    
+    public static void setStoreFile(File f)
+    {
+        mStoreFile = f;
+        mInitialized = false;
     }
     
     private static void loadStore()
