@@ -22,7 +22,7 @@ public class ApplicationLogic
         if (!mInitialized)
         {
             mInitialized = true;
-            System.out.println("STORE.INIT");
+            //System.out.println("STORE.INIT");
             mStore = new Properties();
             loadStore();
         }
@@ -30,6 +30,9 @@ public class ApplicationLogic
     
     private static File getStoreFile()
     {
+        String loc = System.getProperty("d4w.store.location");
+        if (!StringUtils.isTrivial(loc))
+            return new File(loc);
         String user = System.getProperty("user.name");
         if ("root".equals(user))
             return new File(System.getProperty("user.home")+"/d4w_store.properties");
@@ -72,7 +75,7 @@ public class ApplicationLogic
             e.printStackTrace();
         }
         mStoreDirty = false;
-        System.out.println("STORE.SAVE");
+        //System.out.println("STORE.SAVE");
     }
             
     public static String getFromStore(String key)
@@ -88,7 +91,7 @@ public class ApplicationLogic
             if (sval.length() > 256)
                 sval = sval.substring(0, 256);
         }
-        System.out.println("STORE.GET "+key+"="+sval);
+        //System.out.println("STORE.GET "+key+"="+sval);
         return val;
     }
     
@@ -99,7 +102,7 @@ public class ApplicationLogic
             mStore.remove(key);
         else
             mStore.put(key, val);
-        System.out.println("STORE.PUT "+key+"="+val);
+        //System.out.println("STORE.PUT "+key+"="+val);
         mStoreDirty = true;
         Thread t = new Thread("save") { public void run() { saveStore(); } };
         t.start();
