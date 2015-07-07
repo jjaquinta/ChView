@@ -75,17 +75,25 @@ public class D4WStarLogic
         double highZ = Math.max(Z1, Z2);
         //DebugUtils.trace("X: "+lowX+" to "+highX);
         Set<String> quads = new HashSet<String>();
-        for (double x = lowX; x <= highX; x += StarLogic.QUAD_SIZE/2)
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, lowY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, lowY, highZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, highY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(lowX, highY, highZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, lowY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, lowY, highZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, highY, lowZ));
+        quads.add(D4WStarGenLogic.quadCoordToStr(highX, highY, highZ));
+        for (double x = lowX + StarLogic.QUAD_SIZE/2; x <= highX; x += StarLogic.QUAD_SIZE/2)
         {
             //DebugUtils.trace("Testing "+x);
-            for (double y = lowY; y <= highY; y += StarLogic.QUAD_SIZE/2)
-                for (double z = lowZ; z <= highZ; z += StarLogic.QUAD_SIZE/2)
+            for (double y = lowY + StarLogic.QUAD_SIZE/2; y <= highY; y += StarLogic.QUAD_SIZE/2)
+                for (double z = lowZ + StarLogic.QUAD_SIZE/2; z <= highZ; z += StarLogic.QUAD_SIZE/2)
                 {
                     String quadrant = D4WStarGenLogic.quadCoordToStr(x, y, z);
                     quads.add(quadrant);
                 }
         }
-        //DebugUtils.trace(quads.size()+" quadrants");
+        //DebugUtils.trace(quads.size()+" quadrants "+quads);
         List<StarBean> hits = getByQuadrants(quads);
         //DebugUtils.trace(hits.size()+" before bounds checks");
         //for (StarBean star : hits)

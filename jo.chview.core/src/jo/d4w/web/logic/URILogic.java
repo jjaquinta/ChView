@@ -14,7 +14,7 @@ public class URILogic
 	public static Object getFromURI(String uri)
 	{
         URIBuilder u = new URIBuilder(uri);
-        System.out.println("URILogic: "+uri+" -> "+u.toString());
+        //System.out.println("URILogic: "+uri+" -> "+u.toString());
         uri = u.toString();
         Object bean;
         if ("store".equals(u.getScheme()))
