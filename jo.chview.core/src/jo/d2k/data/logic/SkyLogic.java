@@ -114,7 +114,7 @@ public class SkyLogic
     private static double combineAppMag(double appMag1, double appMag2)
     {
         double appMag =-Math.log(Math.pow(2.512, -appMag1) + Math.pow(2.512, -appMag2))/Math.log(2.512);
-        if (!Double.isFinite(appMag))
+        if (Double.isInfinite(appMag))
             System.out.println("Combining "+appMag1+" and "+appMag2+" to "+appMag);
         return appMag;
     }

@@ -521,7 +521,7 @@ public class StarExtraLogic
     public static double getAppMag(double absMag, double dpc)
     {
         double appMag = absMag - 5*(1 - Math.log10(dpc));
-        if (!Double.isFinite(appMag) || (appMag < -8) || (appMag > 32))
+        if (Double.isInfinite(appMag) || (appMag < -8) || (appMag > 32))
             System.out.println("AbsMag="+absMag+", dist="+dpc+", appMag="+appMag);
         return appMag;
     }
