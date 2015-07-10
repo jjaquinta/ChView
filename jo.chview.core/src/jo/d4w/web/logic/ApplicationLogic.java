@@ -29,7 +29,7 @@ public class ApplicationLogic
         }
     }
     
-    private static File getStoreFile()
+    public static File getStoreFile()
     {
         if (mStoreFile != null)
             return mStoreFile;
